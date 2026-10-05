@@ -2,8 +2,9 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-  <meta name="theme-color" content="#0f172a">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#070a12">
+  <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="Craft Spend">
@@ -13,11 +14,11 @@
   <title>Craft Spend — Kigali Expense Tracker</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700;800&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg: #090d16;
-      --surface: #111827;
+      --bg: #070a12;
+      --surface: #0f172a;
       --surface-elevated: #1e293b;
       --surface-hover: #334155;
       --border: rgba(255, 255, 255, 0.08);
@@ -26,14 +27,15 @@
       --text-muted: #94a3b8;
       --text-subtle: #64748b;
       --accent: #38bdf8;
-      --accent-glow: rgba(56, 189, 248, 0.15);
+      --accent-glow: rgba(56, 189, 248, 0.22);
       --accent-green: #34d399;
       --accent-warn: #fbbf24;
       --accent-red: #f87171;
-      --radius-sm: 8px;
-      --radius-md: 14px;
-      --radius-lg: 20px;
+      --radius-sm: 10px;
+      --radius-md: 16px;
+      --radius-lg: 22px;
       --radius-xl: 28px;
+      --card-shadow: 0 10px 30px -4px rgba(0, 0, 0, 0.5);
       --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
       --font-mono: 'JetBrains Mono', monospace;
       --safe-bottom: env(safe-area-inset-bottom, 0px);
@@ -41,20 +43,21 @@
     }
 
     [data-theme="light"] {
-      --bg: #f8fafc;
+      --bg: #f1f5f9;
       --surface: #ffffff;
-      --surface-elevated: #f1f5f9;
+      --surface-elevated: #f8fafc;
       --surface-hover: #e2e8f0;
-      --border: rgba(0, 0, 0, 0.08);
-      --border-strong: rgba(0, 0, 0, 0.16);
+      --border: rgba(15, 23, 42, 0.08);
+      --border-strong: rgba(15, 23, 42, 0.16);
       --text-main: #0f172a;
       --text-muted: #475569;
-      --text-subtle: #94a3b8;
+      --text-subtle: #64748b;
       --accent: #0284c7;
-      --accent-glow: rgba(2, 132, 199, 0.12);
+      --accent-glow: rgba(2, 132, 199, 0.15);
       --accent-green: #059669;
       --accent-warn: #d97706;
       --accent-red: #dc2626;
+      --card-shadow: 0 8px 30px -4px rgba(15, 23, 42, 0.07);
     }
 
     * {
@@ -78,8 +81,13 @@
       -moz-appearance: textfield;
     }
 
-    body {
+    html, body {
+      width: 100%;
+      min-height: 100%;
       background-color: var(--bg);
+    }
+
+    body {
       color: var(--text-main);
       font-family: var(--font-sans);
       min-height: 100vh;
@@ -87,17 +95,27 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      padding-bottom: calc(90px + var(--safe-bottom));
+      padding-bottom: calc(104px + var(--safe-bottom));
       transition: background-color 0.25s ease, color 0.25s ease;
+      -webkit-font-smoothing: antialiased;
     }
 
+    /* Mobile App Shell */
     .app-shell {
       width: 100%;
-      max-width: 540px;
-      padding: calc(16px + var(--safe-top)) 18px 24px;
+      max-width: 520px;
+      padding: calc(14px + var(--safe-top)) 16px 20px;
       display: flex;
       flex-direction: column;
-      gap: 20px;
+      gap: 18px;
+    }
+
+    @media (max-width: 480px) {
+      .app-shell {
+        padding-left: 14px;
+        padding-right: 14px;
+        gap: 16px;
+      }
     }
 
     /* Top Navigation Bar */
@@ -105,7 +123,7 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding-bottom: 4px;
+      padding-bottom: 2px;
     }
 
     .brand-wrap {
@@ -115,29 +133,30 @@
     }
 
     .brand-logo {
-      width: 38px;
-      height: 38px;
-      border-radius: 12px;
+      width: 40px;
+      height: 40px;
+      border-radius: 14px;
       background: linear-gradient(135deg, #0284c7, #38bdf8);
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 20px;
-      box-shadow: 0 4px 14px rgba(56, 189, 248, 0.3);
+      font-size: 21px;
+      box-shadow: 0 4px 16px rgba(56, 189, 248, 0.35);
     }
 
     .brand-info h1 {
-      font-size: 18px;
+      font-size: 19px;
       font-weight: 800;
-      letter-spacing: -0.3px;
+      letter-spacing: -0.4px;
+      line-height: 1.2;
     }
 
     .brand-info p {
       font-size: 11px;
       color: var(--text-muted);
-      font-weight: 600;
+      font-weight: 700;
       text-transform: uppercase;
-      letter-spacing: 0.5px;
+      letter-spacing: 0.6px;
     }
 
     .header-actions {
@@ -158,6 +177,7 @@
       justify-content: center;
       cursor: pointer;
       font-size: 16px;
+      box-shadow: var(--card-shadow);
       transition: all 0.15s ease;
     }
 
@@ -171,14 +191,15 @@
       display: inline-flex;
       align-items: center;
       gap: 6px;
-      padding: 4px 10px;
+      padding: 5px 11px;
       border-radius: 20px;
       font-size: 11px;
-      font-weight: 600;
-      background: var(--surface-elevated);
+      font-weight: 700;
+      background: var(--surface);
       border: 1px solid var(--border);
       color: var(--text-muted);
       cursor: pointer;
+      box-shadow: var(--card-shadow);
       transition: all 0.2s;
     }
 
@@ -191,7 +212,7 @@
 
     .sync-badge.online .sync-dot {
       background: var(--accent-green);
-      box-shadow: 0 0 8px rgba(52, 211, 153, 0.6);
+      box-shadow: 0 0 8px rgba(52, 211, 153, 0.8);
     }
 
     .sync-badge.syncing .sync-dot {
@@ -210,19 +231,22 @@
       background: var(--surface);
       border: 1px solid var(--border);
       border-radius: var(--radius-xl);
-      padding: 22px 20px;
+      padding: 22px 20px 20px;
       position: relative;
       overflow: hidden;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+      box-shadow: var(--card-shadow);
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
     }
 
     .hero-card::after {
       content: '';
       position: absolute;
-      top: -60px;
-      right: -60px;
-      width: 140px;
-      height: 140px;
+      top: -70px;
+      right: -70px;
+      width: 180px;
+      height: 180px;
       background: radial-gradient(circle, var(--accent-glow) 0%, transparent 70%);
       pointer-events: none;
     }
@@ -230,44 +254,47 @@
     .hero-header {
       display: flex;
       justify-content: space-between;
-      align-items: flex-start;
-      margin-bottom: 12px;
+      align-items: center;
     }
 
     .hero-label {
       font-size: 12px;
-      font-weight: 700;
+      font-weight: 800;
       text-transform: uppercase;
       letter-spacing: 0.8px;
       color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 6px;
     }
 
     .month-pill {
       font-size: 11px;
-      font-weight: 700;
+      font-weight: 800;
       background: var(--accent-glow);
       color: var(--accent);
-      padding: 4px 10px;
-      border-radius: 12px;
-      border: 1px solid rgba(56, 189, 248, 0.25);
+      padding: 5px 12px;
+      border-radius: 20px;
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      cursor: pointer;
     }
 
     .hero-amount {
       font-family: var(--font-mono);
-      font-size: 38px;
+      font-size: 40px;
       font-weight: 800;
       letter-spacing: -1.5px;
       color: var(--text-main);
       display: flex;
       align-items: baseline;
-      gap: 6px;
-      margin-bottom: 16px;
+      gap: 8px;
+      line-height: 1.1;
     }
 
     .hero-currency {
       font-size: 16px;
-      font-weight: 700;
-      color: var(--text-muted);
+      font-weight: 800;
+      color: var(--accent);
       letter-spacing: 0;
     }
 
@@ -275,7 +302,7 @@
     .budget-section {
       display: flex;
       flex-direction: column;
-      gap: 8px;
+      gap: 10px;
       padding-top: 14px;
       border-top: 1px solid var(--border);
     }
@@ -283,16 +310,17 @@
     .budget-meta {
       display: flex;
       justify-content: space-between;
+      align-items: center;
       font-size: 12px;
-      font-weight: 600;
+      font-weight: 700;
       color: var(--text-muted);
     }
 
     .budget-track {
       width: 100%;
-      height: 8px;
+      height: 10px;
       background: var(--surface-elevated);
-      border-radius: 6px;
+      border-radius: 8px;
       overflow: hidden;
       position: relative;
     }
@@ -301,25 +329,118 @@
       height: 100%;
       width: 0%;
       background: linear-gradient(90deg, var(--accent), #38bdf8);
-      border-radius: 6px;
+      border-radius: 8px;
       transition: width 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+      box-shadow: 0 0 10px var(--accent-glow);
     }
 
     .budget-fill.warning {
       background: linear-gradient(90deg, #f59e0b, #fbbf24);
+      box-shadow: 0 0 10px rgba(245, 158, 11, 0.4);
     }
 
     .budget-fill.danger {
       background: linear-gradient(90deg, #dc2626, #f87171);
+      box-shadow: 0 0 10px rgba(220, 38, 38, 0.4);
     }
 
     .burn-rate-row {
       display: flex;
       justify-content: space-between;
-      font-size: 11px;
+      align-items: center;
+      font-size: 12px;
       color: var(--text-subtle);
       font-weight: 600;
-      margin-top: 4px;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .micro-chip {
+      background: var(--surface-elevated);
+      padding: 3px 8px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--text-muted);
+    }
+
+    /* 1-Tap Kigali Quick Action Stepper Strip */
+    .quick-strip {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 14px 16px;
+      box-shadow: var(--card-shadow);
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .quick-strip-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .quick-strip-title {
+      font-size: 11px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .quick-strip-sub {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--accent);
+    }
+
+    .quick-buttons-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+    }
+
+    .quick-step-btn {
+      background: var(--surface-elevated);
+      border: 1px solid var(--border);
+      color: var(--text-main);
+      padding: 11px 4px;
+      border-radius: 14px;
+      font-family: var(--font-mono);
+      font-size: 13px;
+      font-weight: 800;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 2px;
+      transition: all 0.15s ease;
+    }
+
+    .quick-step-btn .step-plus {
+      color: var(--accent);
+      font-size: 14px;
+      line-height: 1;
+    }
+
+    .quick-step-btn .step-curr {
+      font-size: 9px;
+      color: var(--text-muted);
+      font-weight: 700;
+      letter-spacing: 0.5px;
+    }
+
+    .quick-step-btn:active {
+      transform: scale(0.92);
+      background: var(--accent-glow);
+      border-color: var(--accent);
     }
 
     /* Category Breakdown Section */
@@ -327,16 +448,15 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-top: 6px;
-      margin-bottom: -6px;
+      margin-top: 4px;
     }
 
     .section-title {
-      font-size: 14px;
-      font-weight: 700;
+      font-size: 13px;
+      font-weight: 800;
       color: var(--text-muted);
       text-transform: uppercase;
-      letter-spacing: 0.6px;
+      letter-spacing: 0.8px;
     }
 
     .cat-grid {
@@ -349,22 +469,23 @@
       background: var(--surface);
       border: 1px solid var(--border);
       border-radius: var(--radius-md);
-      padding: 12px 14px;
+      padding: 13px 14px;
       display: flex;
       flex-direction: column;
-      gap: 6px;
+      gap: 8px;
       cursor: pointer;
+      box-shadow: var(--card-shadow);
       transition: all 0.15s ease;
     }
 
     .cat-card:active {
-      transform: scale(0.97);
+      transform: scale(0.96);
     }
 
     .cat-card.active-filter {
       border-color: var(--accent);
       background: var(--surface-elevated);
-      box-shadow: 0 0 12px var(--accent-glow);
+      box-shadow: 0 0 16px var(--accent-glow);
     }
 
     .cat-card-header {
@@ -383,9 +504,12 @@
 
     .cat-share {
       font-size: 11px;
-      font-weight: 700;
+      font-weight: 800;
       color: var(--text-subtle);
       font-family: var(--font-mono);
+      background: var(--surface-elevated);
+      padding: 2px 6px;
+      border-radius: 6px;
     }
 
     .cat-amount {
@@ -396,18 +520,18 @@
     }
 
     .cat-bar-mini {
-      height: 3px;
+      height: 4px;
       width: 100%;
-      background: var(--surface-hover);
+      background: var(--surface-elevated);
       border-radius: 2px;
       overflow: hidden;
-      margin-top: 2px;
     }
 
     .cat-bar-fill {
       height: 100%;
       background: var(--accent);
       border-radius: 2px;
+      transition: width 0.4s ease;
     }
 
     /* Filter Chips Bar */
@@ -415,7 +539,7 @@
       display: flex;
       gap: 8px;
       overflow-x: auto;
-      padding-bottom: 4px;
+      padding-bottom: 2px;
       scrollbar-width: none;
     }
 
@@ -426,13 +550,14 @@
     .filter-chip {
       background: var(--surface);
       border: 1px solid var(--border);
-      padding: 6px 14px;
+      padding: 7px 14px;
       border-radius: 20px;
       font-size: 12px;
-      font-weight: 600;
+      font-weight: 700;
       color: var(--text-muted);
       white-space: nowrap;
       cursor: pointer;
+      box-shadow: var(--card-shadow);
       transition: all 0.15s;
     }
 
@@ -440,14 +565,14 @@
       background: var(--accent);
       color: #04121d;
       border-color: var(--accent);
-      font-weight: 700;
+      font-weight: 800;
     }
 
     /* Transactions Ledger Feed */
     .ledger-wrap {
       display: flex;
       flex-direction: column;
-      gap: 12px;
+      gap: 10px;
     }
 
     .date-group-header {
@@ -456,7 +581,7 @@
       text-transform: uppercase;
       letter-spacing: 0.8px;
       color: var(--text-subtle);
-      margin-top: 4px;
+      margin-top: 6px;
       margin-left: 4px;
     }
 
@@ -470,11 +595,12 @@
       justify-content: space-between;
       gap: 12px;
       cursor: pointer;
+      box-shadow: var(--card-shadow);
       transition: transform 0.15s, background-color 0.15s;
     }
 
     .tx-card:active {
-      transform: scale(0.98);
+      transform: scale(0.97);
       background: var(--surface-elevated);
     }
 
@@ -487,14 +613,14 @@
     }
 
     .tx-icon-bubble {
-      width: 40px;
-      height: 40px;
-      border-radius: 12px;
+      width: 42px;
+      height: 42px;
+      border-radius: 14px;
       background: var(--surface-elevated);
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 20px;
+      font-size: 21px;
       flex-shrink: 0;
       border: 1px solid var(--border);
     }
@@ -507,7 +633,7 @@
 
     .tx-title {
       font-size: 14px;
-      font-weight: 700;
+      font-weight: 800;
       color: var(--text-main);
       white-space: nowrap;
       overflow: hidden;
@@ -517,7 +643,7 @@
     .tx-subtitle {
       font-size: 12px;
       color: var(--text-muted);
-      font-weight: 500;
+      font-weight: 600;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
@@ -526,75 +652,136 @@
 
     .tx-amount {
       font-family: var(--font-mono);
-      font-size: 16px;
+      font-size: 15px;
       font-weight: 800;
-      color: var(--text-main);
+      color: var(--accent-red);
       text-align: right;
       flex-shrink: 0;
     }
 
     .tx-empty-state {
       text-align: center;
-      padding: 40px 20px;
+      padding: 34px 20px;
       background: var(--surface);
-      border: 1px dashed var(--border-strong);
-      border-radius: var(--radius-lg);
+      border: 1.5px dashed var(--border-strong);
+      border-radius: var(--radius-xl);
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 10px;
+      gap: 12px;
+      box-shadow: var(--card-shadow);
     }
 
     .tx-empty-icon {
-      font-size: 36px;
-      opacity: 0.6;
+      font-size: 40px;
+      filter: drop-shadow(0 4px 12px rgba(56, 189, 248, 0.2));
+    }
+
+    .tx-empty-state h3 {
+      font-size: 16px;
+      font-weight: 800;
+      color: var(--text-main);
     }
 
     .tx-empty-state p {
-      font-size: 13px;
+      font-size: 12px;
       color: var(--text-muted);
       font-weight: 500;
+      max-width: 280px;
+      line-height: 1.4;
     }
 
-    /* Fixed Floating Add Button (FAB) */
-    .fab-bar {
+    .empty-action-btn {
+      background: var(--surface-elevated);
+      border: 1px solid var(--accent);
+      color: var(--accent);
+      padding: 9px 18px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 800;
+      cursor: pointer;
+      margin-top: 4px;
+      transition: all 0.15s;
+    }
+
+    .empty-action-btn:active {
+      transform: scale(0.94);
+      background: var(--accent-glow);
+    }
+
+    /* Fixed Bottom Action Dock (Thumb Zone) */
+    .fab-dock {
       position: fixed;
-      bottom: calc(18px + var(--safe-bottom));
+      bottom: 0;
       left: 0;
       right: 0;
       display: flex;
       justify-content: center;
-      pointer-events: none;
+      align-items: center;
+      padding: 10px 16px calc(12px + var(--safe-bottom));
+      background: linear-gradient(to top, var(--bg) 85%, transparent 100%);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
       z-index: 90;
     }
 
-    .fab-btn {
-      pointer-events: auto;
+    .fab-dock-inner {
+      width: 100%;
+      max-width: 520px;
+      display: flex;
+      gap: 10px;
+    }
+
+    .fab-btn-main {
+      flex: 1;
       background: linear-gradient(135deg, #0284c7, #38bdf8);
       color: #04121d;
       border: none;
-      padding: 14px 28px;
-      border-radius: 30px;
+      padding: 15px 22px;
+      border-radius: 20px;
       font-size: 16px;
       font-weight: 800;
       display: flex;
       align-items: center;
-      gap: 10px;
-      box-shadow: 0 10px 25px rgba(56, 189, 248, 0.4);
+      justify-content: center;
+      gap: 8px;
+      box-shadow: 0 8px 24px rgba(56, 189, 248, 0.4);
       cursor: pointer;
       transition: transform 0.15s, box-shadow 0.15s;
     }
 
-    .fab-btn:active {
-      transform: scale(0.94);
-      box-shadow: 0 6px 15px rgba(56, 189, 248, 0.3);
+    .fab-btn-main:active {
+      transform: scale(0.96);
+      box-shadow: 0 4px 14px rgba(56, 189, 248, 0.3);
+    }
+
+    .fab-btn-gear {
+      width: 52px;
+      height: 52px;
+      border-radius: 18px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      cursor: pointer;
+      box-shadow: var(--card-shadow);
+      transition: transform 0.15s;
+      flex-shrink: 0;
+    }
+
+    .fab-btn-gear:active {
+      transform: scale(0.92);
+      background: var(--surface-hover);
     }
 
     /* Modals & Bottom Sheets */
     .modal-overlay {
       position: fixed;
       inset: 0;
-      background: rgba(0, 0, 0, 0.7);
+      background: rgba(0, 0, 0, 0.75);
       backdrop-filter: blur(8px);
       -webkit-backdrop-filter: blur(8px);
       z-index: 100;
@@ -612,7 +799,7 @@
 
     .sheet-modal {
       width: 100%;
-      max-width: 540px;
+      max-width: 520px;
       background: var(--surface);
       border: 1px solid var(--border-strong);
       border-bottom: none;
@@ -625,6 +812,7 @@
       transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1);
       max-height: 92vh;
       overflow-y: auto;
+      box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.5);
     }
 
     .modal-overlay.open .sheet-modal {
@@ -632,12 +820,12 @@
     }
 
     .sheet-drag-handle {
-      width: 40px;
+      width: 44px;
       height: 5px;
       background: var(--border-strong);
       border-radius: 3px;
       align-self: center;
-      margin-bottom: 4px;
+      margin-bottom: 2px;
     }
 
     .sheet-title-row {
@@ -665,7 +853,7 @@
       background: var(--surface-elevated);
       border: 2px solid var(--border-strong);
       border-radius: var(--radius-lg);
-      padding: 14px 16px;
+      padding: 14px 18px;
       display: flex;
       align-items: baseline;
       justify-content: space-between;
@@ -680,7 +868,7 @@
 
     .amount-input {
       font-family: var(--font-mono);
-      font-size: 34px;
+      font-size: 36px;
       font-weight: 800;
       background: transparent;
       border: none;
@@ -690,9 +878,9 @@
     }
 
     .amount-curr-tag {
-      font-size: 15px;
+      font-size: 16px;
       font-weight: 800;
-      color: var(--text-muted);
+      color: var(--accent);
       font-family: var(--font-mono);
     }
 
@@ -707,8 +895,8 @@
       background: var(--surface-elevated);
       border: 1px solid var(--border);
       color: var(--text-muted);
-      padding: 6px 11px;
-      border-radius: 10px;
+      padding: 7px 12px;
+      border-radius: 12px;
       font-size: 12px;
       font-weight: 700;
       font-family: var(--font-mono);
@@ -740,41 +928,51 @@
     .chip-btn {
       background: var(--surface-elevated);
       border: 1.5px solid var(--border);
-      border-radius: 12px;
-      padding: 10px 4px;
+      border-radius: 14px;
+      padding: 11px 4px;
       display: flex;
       flex-direction: column;
       align-items: center;
       gap: 4px;
       cursor: pointer;
       transition: all 0.15s;
+    }
+
+    .chip-btn .icon {
+      font-size: 20px;
+    }
+
+    .chip-btn span:last-child {
       font-size: 11px;
       font-weight: 700;
       color: var(--text-muted);
     }
 
-    .chip-btn span.icon {
-      font-size: 20px;
-    }
-
     .chip-btn.active {
       border-color: var(--accent);
       background: var(--accent-glow);
+    }
+
+    .chip-btn.active span:last-child {
       color: var(--accent);
+      font-weight: 800;
+    }
+
+    .chip-btn:active {
+      transform: scale(0.94);
     }
 
     .more-cats-panel {
       display: none;
       grid-template-columns: repeat(3, 1fr);
       gap: 8px;
-      margin-top: 6px;
+      margin-top: 4px;
     }
 
     .more-cats-panel.open {
       display: grid;
     }
 
-    /* Inputs */
     .input-group {
       display: flex;
       flex-direction: column;
@@ -783,14 +981,13 @@
 
     .input-field {
       background: var(--surface-elevated);
-      border: 1.5px solid var(--border);
+      border: 1px solid var(--border-strong);
       border-radius: var(--radius-md);
-      padding: 12px 14px;
-      color: var(--text-main);
-      font-family: var(--font-sans);
+      padding: 13px 14px;
       font-size: 14px;
-      font-weight: 600;
+      color: var(--text-main);
       outline: none;
+      font-family: var(--font-sans);
       transition: border-color 0.2s;
     }
 
@@ -803,7 +1000,7 @@
       color: #04121d;
       border: none;
       border-radius: var(--radius-md);
-      padding: 15px;
+      padding: 16px;
       font-size: 16px;
       font-weight: 800;
       cursor: pointer;
@@ -812,6 +1009,7 @@
       align-items: center;
       gap: 8px;
       margin-top: 6px;
+      box-shadow: 0 6px 20px rgba(56, 189, 248, 0.35);
       transition: transform 0.12s;
     }
 
@@ -840,7 +1038,7 @@
       background: var(--surface-elevated);
       border: 1px solid var(--border);
       border-radius: var(--radius-md);
-      padding: 14px;
+      padding: 16px;
       display: flex;
       flex-direction: column;
       gap: 10px;
@@ -869,7 +1067,7 @@
       background: #0f172a;
       border: 1px solid var(--accent);
       color: #fff;
-      padding: 10px 18px;
+      padding: 11px 20px;
       border-radius: 30px;
       font-size: 13px;
       font-weight: 700;
@@ -877,7 +1075,7 @@
       opacity: 0;
       pointer-events: none;
       transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
     }
 
     .toast.show {
@@ -890,7 +1088,7 @@
 
   <div class="app-shell">
 
-    <!-- Top Header -->
+    <!-- Top Navigation Header -->
     <header>
       <div class="brand-wrap">
         <div class="brand-logo">💳</div>
@@ -904,7 +1102,7 @@
           <div class="sync-dot"></div>
           <span id="sync-text">Local</span>
         </div>
-        <button class="btn-icon" onclick="toggleTheme()" title="Toggle Theme">🌓</button>
+        <button class="btn-icon" onclick="toggleTheme()" title="Toggle Dark/Light Mode">🌓</button>
         <button class="btn-icon" onclick="openSettingsModal()" title="Settings & Sync">⚙️</button>
       </div>
     </header>
@@ -913,7 +1111,7 @@
     <div class="hero-card">
       <div class="hero-header">
         <span class="hero-label">October Total Outlay</span>
-        <span class="month-pill" id="current-month-name">Oct 2026</span>
+        <span class="month-pill" id="current-month-name" onclick="openSettingsModal()">Oct 2026 ▾</span>
       </div>
 
       <div class="hero-amount">
@@ -930,16 +1128,42 @@
           <div class="budget-fill" id="budget-bar"></div>
         </div>
         <div class="burn-rate-row">
-          <span id="burn-rate-text">Daily burn: 0 RWF/day</span>
-          <span id="days-remaining-text">27 days left in Oct</span>
+          <span class="micro-chip" id="burn-rate-text">Daily: 0 RWF/day</span>
+          <span class="micro-chip" id="days-remaining-text">26 days left in Oct</span>
         </div>
+      </div>
+    </div>
+
+    <!-- 1-Tap Kigali Quick Action Stepper Strip -->
+    <div class="quick-strip">
+      <div class="quick-strip-header">
+        <span class="quick-strip-title">⚡ Quick Log (RWF)</span>
+        <span class="quick-strip-sub">Instant 1-Tap</span>
+      </div>
+      <div class="quick-buttons-grid">
+        <button type="button" class="quick-step-btn" onclick="quickLogWithAmount(1000)">
+          <span class="step-plus">+</span>1,000
+          <span class="step-curr">Moto</span>
+        </button>
+        <button type="button" class="quick-step-btn" onclick="quickLogWithAmount(2000)">
+          <span class="step-plus">+</span>2,000
+          <span class="step-curr">Café</span>
+        </button>
+        <button type="button" class="quick-step-btn" onclick="quickLogWithAmount(5000)">
+          <span class="step-plus">+</span>5,000
+          <span class="step-curr">Market</span>
+        </button>
+        <button type="button" class="quick-step-btn" onclick="quickLogWithAmount(10000)">
+          <span class="step-plus">+</span>10,000
+          <span class="step-curr">Fuel</span>
+        </button>
       </div>
     </div>
 
     <!-- Category Distribution Overview -->
     <div class="section-title-row">
       <span class="section-title">Category Breakdown</span>
-      <span style="font-size: 11px; color: var(--text-subtle); font-weight: 700;" id="cat-count-sub">0 Categories</span>
+      <span style="font-size: 11px; color: var(--text-subtle); font-weight: 700;" id="cat-count-sub">0 Active</span>
     </div>
 
     <div class="cat-grid" id="category-summary-grid">
@@ -947,9 +1171,9 @@
     </div>
 
     <!-- Filter Pills Row -->
-    <div class="section-title-row" style="margin-top: 10px;">
+    <div class="section-title-row" style="margin-top: 6px;">
       <span class="section-title">Transactions</span>
-      <span style="font-size: 12px; font-weight: 700; color: var(--accent); cursor: pointer;" onclick="clearFilters()" id="clear-filter-btn" style="display: none;">Clear filter</span>
+      <span style="font-size: 12px; font-weight: 700; color: var(--accent); cursor: pointer; display: none;" onclick="clearFilters()" id="clear-filter-btn">Clear filter</span>
     </div>
 
     <div class="filter-scroll" id="filter-chips-bar">
@@ -969,12 +1193,15 @@
 
   </div>
 
-  <!-- Bottom Floating Add Button (FAB) -->
-  <div class="fab-bar">
-    <button class="fab-btn" onclick="openExpenseSheet()">
-      <span style="font-size: 20px;">＋</span>
-      <span>Log Expense</span>
-    </button>
+  <!-- Ergonomic Fixed Bottom Action Dock -->
+  <div class="fab-dock">
+    <div class="fab-dock-inner">
+      <button class="fab-btn-main" onclick="openExpenseSheet()">
+        <span style="font-size: 20px;">＋</span>
+        <span>Log Expense</span>
+      </button>
+      <button class="fab-btn-gear" onclick="openSettingsModal()" title="Settings">⚙️</button>
+    </div>
   </div>
 
   <!-- Quick Entry Bottom Sheet Modal -->
@@ -1045,7 +1272,7 @@
       <!-- Description & Note -->
       <div class="input-group">
         <div class="picker-label">Description / Merchant</div>
-        <input type="text" id="inp-desc" class="input-field" placeholder="e.g. Simba Supermarket, Total pump, Beers">
+        <input type="text" id="inp-desc" class="input-field" placeholder="e.g. Simba Supermarket, Total pump, Café Neo">
       </div>
 
       <div class="input-group">
@@ -1078,7 +1305,7 @@
         <p>Set your target spending limit for October to track your burn rate.</p>
         <div style="display: flex; gap: 8px;">
           <input type="number" id="cfg-budget" class="input-field" style="flex: 1;" placeholder="250000">
-          <button class="btn-primary" style="margin-top: 0; padding: 10px 16px;" onclick="saveBudgetTarget()">Save</button>
+          <button class="btn-primary" style="margin-top: 0; padding: 12px 18px;" onclick="saveBudgetTarget()">Save</button>
         </div>
       </div>
 
@@ -1133,7 +1360,6 @@
     // Load initial expenses from localStorage
     let expenses = JSON.parse(localStorage.getItem('craft_expenses') || 'null');
     if (!expenses) {
-      // Migrate previous extraExpenses if present
       const oldRaw = localStorage.getItem('meal_extra_expenses');
       if (oldRaw) {
         try {
@@ -1186,6 +1412,12 @@
       setTimeout(() => t.classList.remove('show'), 2400);
     }
 
+    function triggerHaptic(duration = 12) {
+      if (navigator.vibrate) {
+        try { navigator.vibrate(duration); } catch (e) {}
+      }
+    }
+
     // ==========================================
     // RENDERING LOGIC
     // ==========================================
@@ -1200,23 +1432,23 @@
       const total = expenses.reduce((sum, e) => sum + (Number(e.amount) || 0), 0);
       document.getElementById('hero-total-val').textContent = formatRWF(total);
 
-      // Budget Calculation
+      // Budget Progress
       const pct = budgetTarget > 0 ? Math.min(100, Math.round((total / budgetTarget) * 100)) : 0;
       const bar = document.getElementById('budget-bar');
       bar.style.width = pct + '%';
       bar.className = 'budget-fill' + (pct > 90 ? ' danger' : pct > 75 ? ' warning' : '');
 
-      document.getElementById('budget-ratio-text').textContent = 
-        `${formatRWF(total)} / ${formatRWF(budgetTarget)} RWF (${pct}%)`;
+      document.getElementById('budget-ratio-text').textContent = `${formatRWF(total)} / ${formatRWF(budgetTarget)} RWF (${pct}%)`;
 
-      // Burn rate calculation (current day of month)
+      // Burn rate calculation (October has 31 days)
       const now = new Date();
       const currentDay = Math.max(1, now.getDate());
-      const daysInMonth = new Date(now.getFullYear(), now.getMonth() + 1, 0).getDate();
-      const daysLeft = Math.max(0, daysInMonth - currentDay);
+      const totalDays = 31;
+      const daysLeft = Math.max(1, totalDays - currentDay);
+      const remainingBudget = Math.max(0, budgetTarget - total);
+      const dailyAllowance = Math.round(remainingBudget / daysLeft);
 
-      const dailyBurn = Math.round(total / currentDay);
-      document.getElementById('burn-rate-text').textContent = `Daily burn: ${formatRWF(dailyBurn)} RWF/day`;
+      document.getElementById('burn-rate-text').textContent = `Allowance: ${formatRWF(dailyAllowance)} RWF/d`;
       document.getElementById('days-remaining-text').textContent = `${daysLeft} days left in Oct`;
     }
 
@@ -1235,11 +1467,14 @@
         totalAll += (Number(e.amount) || 0);
       });
 
-      // Show top 4 categories by spend
       const sorted = Object.entries(catTotals).sort((a, b) => b[1] - a[1]);
-      document.getElementById('cat-count-sub').textContent = `${sorted.filter(s => s[1] > 0).length} Active`;
+      const activeCount = sorted.filter(s => s[1] > 0).length;
+      document.getElementById('cat-count-sub').textContent = `${activeCount} Active`;
 
-      grid.innerHTML = sorted.slice(0, 4).map(([cat, amt]) => {
+      // Show top 4 categories
+      const displayCats = sorted.slice(0, 4);
+
+      grid.innerHTML = displayCats.map(([cat, amt]) => {
         const info = DEFAULT_CATEGORIES[cat] || { icon: '🏷️' };
         const share = totalAll > 0 ? Math.round((amt / totalAll) * 100) : 0;
         const isSelected = activeFilter === cat;
@@ -1271,9 +1506,12 @@
       if (filtered.length === 0) {
         feed.innerHTML = `
           <div class="tx-empty-state">
-            <span class="tx-empty-icon">💸</span>
-            <p>No expenses recorded ${activeFilter !== 'all' ? `for ${activeFilter}` : 'yet'}.</p>
-            <p style="font-size: 11px; color: var(--text-subtle);">Tap "+ Log Expense" below to add your first transaction.</p>
+            <div class="tx-empty-icon">🧾</div>
+            <h3>Ready for October Spend</h3>
+            <p>No expenses recorded ${activeFilter !== 'all' ? `for ${activeFilter}` : 'yet'}. Tap below to log your first coffee, moto ride, or grocery run.</p>
+            <button class="empty-action-btn" onclick="openExpenseSheet()">
+              <span>＋ Log Expense</span>
+            </button>
           </div>
         `;
         return;
@@ -1301,7 +1539,7 @@
                   <div class="tx-subtitle">${escapeHtml(item.note || item.category)}</div>
                 </div>
               </div>
-              <div class="tx-amount">${formatRWF(item.amount)} RWF</div>
+              <div class="tx-amount">-${formatRWF(item.amount)} RWF</div>
             </div>
           `;
         });
@@ -1334,6 +1572,7 @@
     // FILTER CONTROLS
     // ==========================================
     function applyLedgerFilter(cat, btn) {
+      triggerHaptic(8);
       activeFilter = cat;
       document.querySelectorAll('#filter-chips-bar .filter-chip').forEach(c => c.classList.remove('active'));
       if (btn) btn.classList.add('active');
@@ -1343,6 +1582,7 @@
     }
 
     function toggleCategoryFilter(cat) {
+      triggerHaptic(8);
       if (activeFilter === cat) {
         applyLedgerFilter('all', document.querySelector('#filter-chips-bar .filter-chip'));
       } else {
@@ -1357,9 +1597,16 @@
     }
 
     // ==========================================
-    // MODAL & EXPENSE ENTRY CONTROLS
+    // QUICK LOGGING & MODAL CONTROLS
     // ==========================================
+    function quickLogWithAmount(amt) {
+      triggerHaptic(15);
+      openExpenseSheet();
+      document.getElementById('inp-amount').value = amt;
+    }
+
     function openExpenseSheet() {
+      triggerHaptic(12);
       currentEditingId = null;
       document.getElementById('sheet-header-title').textContent = 'Log Expense';
       document.getElementById('btn-save-expense').textContent = 'Save Expense';
@@ -1371,7 +1618,7 @@
       selectFormCategory('Groceries');
 
       document.getElementById('expense-modal').classList.add('open');
-      setTimeout(() => document.getElementById('inp-amount').focus(), 120);
+      setTimeout(() => document.getElementById('inp-amount').focus(), 140);
     }
 
     function closeExpenseSheet() {
@@ -1380,18 +1627,21 @@
     }
 
     function addAmount(val) {
+      triggerHaptic(10);
       const input = document.getElementById('inp-amount');
       const curr = Number(input.value) || 0;
       input.value = curr + val;
     }
 
     function clearAmount() {
+      triggerHaptic(10);
       const input = document.getElementById('inp-amount');
       input.value = '';
       input.focus();
     }
 
     function selectFormCategory(cat, btn) {
+      triggerHaptic(8);
       activeFormCategory = cat;
       document.querySelectorAll('.chip-btn').forEach(b => {
         b.classList.toggle('active', b.getAttribute('data-cat') === cat);
@@ -1411,6 +1661,7 @@
     });
 
     function toggleMoreCategories() {
+      triggerHaptic(8);
       const drawer = document.getElementById('more-cats-drawer');
       const toggle = document.getElementById('more-cat-toggle');
       const isOpen = drawer.classList.contains('open');
@@ -1419,6 +1670,7 @@
     }
 
     function editExpense(id) {
+      triggerHaptic(10);
       const item = expenses.find(e => e.id === id);
       if (!item) return;
 
@@ -1436,6 +1688,7 @@
     }
 
     async function submitExpenseForm() {
+      triggerHaptic(15);
       const amtInput = document.getElementById('inp-amount');
       const descInput = document.getElementById('inp-desc');
       const noteInput = document.getElementById('inp-note');
@@ -1488,6 +1741,7 @@
     function deleteActiveEditingExpense() {
       if (!currentEditingId) return;
       if (confirm('Delete this expense?')) {
+        triggerHaptic(20);
         const idToDelete = currentEditingId;
         expenses = expenses.filter(e => e.id !== idToDelete);
         localStorage.setItem('craft_expenses', JSON.stringify(expenses));
@@ -1508,6 +1762,7 @@
     // SETTINGS, BACKUPS & SUPABASE CLOUD SYNC
     // ==========================================
     function openSettingsModal() {
+      triggerHaptic(10);
       document.getElementById('cfg-budget').value = budgetTarget;
       document.getElementById('cfg-supabase-url').value = cloudConfig.url || '';
       document.getElementById('cfg-supabase-key').value = cloudConfig.key || '';
@@ -1519,6 +1774,7 @@
     }
 
     function saveBudgetTarget() {
+      triggerHaptic(12);
       const val = Number(document.getElementById('cfg-budget').value) || 250000;
       budgetTarget = val;
       localStorage.setItem('craft_budget_target', budgetTarget);
@@ -1527,6 +1783,7 @@
     }
 
     async function saveCloudConfig() {
+      triggerHaptic(12);
       const url = document.getElementById('cfg-supabase-url').value.trim().replace(/\/$/, '');
       const key = document.getElementById('cfg-supabase-key').value.trim();
 
@@ -1554,10 +1811,9 @@
           updateSyncStatus();
           pullAllFromCloud();
         } else if (res.status === 404 || res.status === 400) {
-          // Table doesn't exist yet, save anyway
           cloudConfig = { url, key };
           localStorage.setItem('craft_cloud_config', JSON.stringify(cloudConfig));
-          showToast('Credentials saved! Table will be synced.');
+          showToast('Credentials saved! Table ready.');
           updateSyncStatus();
         } else {
           showToast(`Error ${res.status}: check URL and Key`);
@@ -1627,7 +1883,6 @@
         if (res.ok) {
           const remote = await res.json();
           if (Array.isArray(remote) && remote.length > 0) {
-            // Merge remote with local
             const map = new Map();
             expenses.forEach(e => map.set(e.id, e));
             remote.forEach(e => map.set(e.id, e));
@@ -1646,6 +1901,7 @@
     // BACKUP EXPORTS & IMPORTS
     // ==========================================
     function exportJSONBackup() {
+      triggerHaptic(10);
       const data = {
         app: 'Craft Spend',
         version: '2.0',
@@ -1664,6 +1920,7 @@
     }
 
     function exportCSV() {
+      triggerHaptic(10);
       if (expenses.length === 0) {
         showToast('No expenses to export');
         return;
@@ -1724,19 +1981,20 @@
     // THEME CONTROLS
     // ==========================================
     function toggleTheme() {
+      triggerHaptic(10);
       const current = document.documentElement.getAttribute('data-theme');
       const next = current === 'light' ? 'dark' : 'light';
       document.documentElement.setAttribute('data-theme', next);
       localStorage.setItem('craft_theme', next);
       const meta = document.querySelector('meta[name="theme-color"]');
-      if (meta) meta.setAttribute('content', next === 'light' ? '#f8fafc' : '#090d16');
+      if (meta) meta.setAttribute('content', next === 'light' ? '#f1f5f9' : '#070a12');
     }
 
-    // Initialize Theme
+    // Initialize Theme (default to dark)
     const savedTheme = localStorage.getItem('craft_theme') || 'dark';
     document.documentElement.setAttribute('data-theme', savedTheme);
     const meta = document.querySelector('meta[name="theme-color"]');
-    if (meta) meta.setAttribute('content', savedTheme === 'light' ? '#f8fafc' : '#090d16');
+    if (meta) meta.setAttribute('content', savedTheme === 'light' ? '#f1f5f9' : '#070a12');
 
     // Register Service Worker
     if ('serviceWorker' in navigator) {
