@@ -1,0 +1,18 @@
+# Logs and runtime files
+*.log
+*.vbs
+*.bat
+*.py
+*.apk
+
+# State and local user data
+state.json
+lockout.json
+tunnel_status.json
+
+# Tooling and backups
+backups/
+platform-tools/
+__pycache__/
+.vscode/
+.idea/
