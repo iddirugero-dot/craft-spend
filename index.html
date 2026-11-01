@@ -130,7 +130,6 @@
       display: flex;
       align-items: center;
       gap: 10px;
-      cursor: pointer;
     }
 
     .brand-logo {
@@ -158,19 +157,6 @@
       font-weight: 700;
       text-transform: uppercase;
       letter-spacing: 0.6px;
-      display: flex;
-      align-items: center;
-      gap: 4px;
-    }
-
-    .header-profile-tag {
-      color: var(--accent);
-      background: var(--surface-elevated);
-      padding: 1px 7px;
-      border-radius: 10px;
-      font-size: 10px;
-      font-weight: 800;
-      border: 1px solid var(--border);
     }
 
     .header-actions {
@@ -1175,63 +1161,84 @@
       border-color: var(--accent);
     }
 
-    /* Profile Modal Cards */
-    .profile-card {
-      background: var(--surface-elevated);
-      border: 1.5px solid var(--border);
-      border-radius: var(--radius-md);
-      padding: 14px 16px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      cursor: pointer;
-      box-shadow: var(--card-shadow);
-      transition: all 0.15s;
-    }
-
-    .profile-card.active {
-      border-color: var(--accent);
-      background: var(--accent-glow);
-    }
-
-    .profile-info {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
-    .profile-avatar {
-      width: 42px;
-      height: 42px;
-      border-radius: 14px;
-      background: var(--surface);
+    /* Privacy PIN Screen */
+    .pin-lock-modal {
+      position: fixed;
+      inset: 0;
+      background: var(--bg);
+      z-index: 999;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 21px;
-      border: 1px solid var(--border);
+      padding: 24px;
     }
 
-    .profile-name {
-      font-size: 15px;
-      font-weight: 800;
-      color: var(--text-main);
+    .pin-lock-box {
+      width: 100%;
+      max-width: 300px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
 
-    .profile-sub {
-      font-size: 11px;
-      color: var(--text-muted);
-      font-weight: 600;
+    .pin-dots {
+      display: flex;
+      gap: 16px;
+      margin-bottom: 28px;
     }
 
-    .profile-badge-active {
+    .pin-dot {
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: var(--surface-hover);
+      border: 1.5px solid var(--border-strong);
+      transition: all 0.15s ease;
+    }
+
+    .pin-dot.filled {
       background: var(--accent);
-      color: #04121d;
-      font-size: 10px;
+      border-color: var(--accent);
+      box-shadow: 0 0 10px var(--accent-glow);
+    }
+
+    .pin-pad {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+      width: 100%;
+      max-width: 270px;
+    }
+
+    .pin-btn {
+      aspect-ratio: 1;
+      border-radius: 50%;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      color: var(--text-main);
+      font-size: 22px;
       font-weight: 800;
-      padding: 3px 8px;
-      border-radius: 8px;
-      text-transform: uppercase;
+      font-family: var(--font-mono);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: var(--card-shadow);
+      transition: all 0.12s;
+    }
+
+    .pin-btn:active {
+      transform: scale(0.9);
+      background: var(--accent-glow);
+      border-color: var(--accent);
+    }
+
+    .pin-btn-sub {
+      font-size: 13px;
+      font-family: var(--font-sans);
+      font-weight: 700;
+      color: var(--text-muted);
     }
 
     /* Settings Modal Content */
@@ -1287,15 +1294,46 @@
 </head>
 <body>
 
+  <!-- Startup PIN Lock Screen (Shown if PIN is configured in Settings) -->
+  <div id="pin-lock-modal" class="pin-lock-modal" style="display: none;">
+    <div class="pin-lock-box">
+      <div class="brand-logo" style="margin: 0 auto 12px; width: 48px; height: 48px; font-size: 24px;">💳</div>
+      <h2 style="font-size: 20px; font-weight: 800; margin-bottom: 4px;">Craft Spend</h2>
+      <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 20px;">Enter your 4-digit PIN</p>
+      
+      <div class="pin-dots">
+        <div class="pin-dot" id="pdot-0"></div>
+        <div class="pin-dot" id="pdot-1"></div>
+        <div class="pin-dot" id="pdot-2"></div>
+        <div class="pin-dot" id="pdot-3"></div>
+      </div>
+
+      <div class="pin-pad">
+        <button class="pin-btn" onclick="enterPinDigit('1')">1</button>
+        <button class="pin-btn" onclick="enterPinDigit('2')">2</button>
+        <button class="pin-btn" onclick="enterPinDigit('3')">3</button>
+        <button class="pin-btn" onclick="enterPinDigit('4')">4</button>
+        <button class="pin-btn" onclick="enterPinDigit('5')">5</button>
+        <button class="pin-btn" onclick="enterPinDigit('6')">6</button>
+        <button class="pin-btn" onclick="enterPinDigit('7')">7</button>
+        <button class="pin-btn" onclick="enterPinDigit('8')">8</button>
+        <button class="pin-btn" onclick="enterPinDigit('9')">9</button>
+        <button class="pin-btn pin-btn-sub" onclick="clearPinInput()">Clear</button>
+        <button class="pin-btn" onclick="enterPinDigit('0')">0</button>
+        <button class="pin-btn pin-btn-sub" onclick="backspacePinInput()">⌫</button>
+      </div>
+    </div>
+  </div>
+
   <div class="app-shell">
 
     <!-- Top Navigation Header -->
     <header>
-      <div class="brand-wrap" onclick="openProfileModal()">
+      <div class="brand-wrap">
         <div class="brand-logo">💳</div>
         <div class="brand-info">
           <h1>Craft Spend</h1>
-          <p>Kigali Ledger <span class="header-profile-tag" id="header-profile-tag">Iddi</span></p>
+          <p>Kigali Ledger</p>
         </div>
       </div>
       <div class="header-actions">
@@ -1304,7 +1342,7 @@
           <span id="sync-text">Local</span>
         </div>
         <button class="btn-icon" onclick="toggleTheme()" title="Toggle Dark/Light Mode">🌓</button>
-        <button class="btn-icon" onclick="openSettingsModal()" title="Settings & Sync">⚙️</button>
+        <button class="btn-icon" onclick="openSettingsModal()" title="Settings & Privacy">⚙️</button>
       </div>
     </header>
 
@@ -1386,7 +1424,6 @@
         <span style="font-size: 20px;">＋</span>
         <span>Log Expense</span>
       </button>
-      <button class="fab-btn-side" onclick="openProfileModal()" title="Switch Profile">👤</button>
     </div>
   </div>
 
@@ -1499,68 +1536,54 @@
     </div>
   </div>
 
-  <!-- Profiles Switcher Modal (Iddi & Sister) -->
-  <div class="modal-overlay" id="profile-modal" onclick="handleModalBackdrop(event, 'profile-modal')">
-    <div class="sheet-modal" onclick="event.stopPropagation()">
-      <div class="sheet-drag-handle"></div>
-      <div class="sheet-title-row">
-        <h3 class="sheet-title">👤 Switch Account / Profile</h3>
-        <button class="btn-close" onclick="closeProfileModal()">✕</button>
-      </div>
-      <p style="font-size: 12px; color: var(--text-muted); margin-top: -6px;">
-        Each profile has its own private expenses, monthly budgets, and reports.
-      </p>
-
-      <!-- Profiles List -->
-      <div id="profiles-list-container" style="display: flex; flex-direction: column; gap: 10px;">
-        <!-- Injected dynamically -->
-      </div>
-
-      <button type="button" class="btn-primary" style="margin-top: 4px; padding: 13px;" onclick="promptAddNewProfile()">
-        <span>＋ Create New Profile</span>
-      </button>
-
-      <!-- Share with Sister Box -->
-      <div class="settings-card" style="margin-top: 6px;">
-        <h4>📱 Want your Sister to use it on her own phone?</h4>
-        <p>
-          She doesn't need to do any technical setup! Simply send her your app link. Her phone's browser will keep her own private ledger completely separate from yours:
-        </p>
-        <div style="display: flex; gap: 8px; margin-top: 4px; flex-wrap: wrap;">
-          <button class="btn-primary" style="flex: 1; margin: 0; padding: 12px; font-size: 13px;" onclick="copySisterShareLink()">
-            📋 Copy App Link
-          </button>
-          <button class="btn-primary" style="flex: 1; margin: 0; padding: 12px; font-size: 13px; background: #25d366; color: #fff;" onclick="shareSisterWhatsApp()">
-            💬 Share via WhatsApp
-          </button>
-        </div>
-      </div>
-    </div>
-  </div>
-
   <!-- Settings & Cloud Sync Modal -->
   <div class="modal-overlay" id="settings-modal" onclick="handleModalBackdrop(event, 'settings-modal')">
     <div class="sheet-modal" onclick="event.stopPropagation()">
       <div class="sheet-drag-handle"></div>
       <div class="sheet-title-row">
-        <h3 class="sheet-title">Settings & Cloud Sync</h3>
+        <h3 class="sheet-title">Settings & Privacy</h3>
         <button class="btn-close" onclick="closeSettingsModal()">✕</button>
       </div>
 
       <!-- Monthly Budget Target -->
       <div class="settings-card">
-        <h4 id="cfg-budget-title">🎯 Monthly Budget Target</h4>
-        <p>Set your target spending limit for this profile to track your burn rate.</p>
+        <h4>🎯 Monthly Budget Target</h4>
+        <p>Set your target spending limit to track your burn rate.</p>
         <div style="display: flex; gap: 8px;">
           <input type="number" id="cfg-budget" class="input-field" style="flex: 1;" placeholder="250000">
           <button class="btn-primary" style="margin-top: 0; padding: 12px 18px;" onclick="saveBudgetTarget()">Save</button>
         </div>
       </div>
 
+      <!-- Privacy PIN Lock -->
+      <div class="settings-card">
+        <h4>🔒 Privacy PIN Lock</h4>
+        <p>Require a 4-digit PIN whenever this app is opened so no one else can see your transactions.</p>
+        <div id="pin-settings-controls" style="display: flex; gap: 8px; align-items: center; margin-top: 4px;">
+          <!-- Injected dynamically -->
+        </div>
+      </div>
+
+      <!-- Dedicated App for Sister -->
+      <div class="settings-card">
+        <h4>🌸 Sister's Standalone App</h4>
+        <p>
+          She has her own separate web address! Her app uses completely isolated storage—you will never see her transactions, and she will never see yours.
+        </p>
+        <div style="display: flex; gap: 8px; margin-top: 4px; flex-wrap: wrap;">
+          <button class="btn-primary" style="flex: 1; margin: 0; padding: 12px; font-size: 13px;" onclick="copySisterAppUrl()">
+            📋 Copy Sister's Link
+          </button>
+          <button class="btn-primary" style="flex: 1; margin: 0; padding: 12px; font-size: 13px; background: #25d366; color: #fff;" onclick="shareSisterAppWhatsApp()">
+            💬 Send via WhatsApp
+          </button>
+        </div>
+      </div>
+
       <!-- Supabase Cloud Sync Connector -->
       <div class="settings-card">
-        <h4>☁️ Supabase Cloud Database</h4>
-        <p>Connect your free Supabase cloud database to sync automatically across all phones and laptops with zero data loss.</p>
+        <h4>☁️ Supabase Cloud Database (Optional)</h4>
+        <p>Connect your private Supabase cloud database to back up your own phone automatically.</p>
         <div class="input-group">
           <span class="picker-label">Project URL</span>
           <input type="text" id="cfg-supabase-url" class="input-field" placeholder="https://xyzcompany.supabase.co">
@@ -1593,7 +1616,7 @@
 
   <script>
     // ==========================================
-    // CRAFT SPEND — CORE STATE & STORAGE ENGINE
+    // CRAFT SPEND — PURE PRIVATE DATA ENGINE
     // ==========================================
     const DEFAULT_CATEGORIES = {
       'Groceries': { icon: '🛒', color: '#38bdf8' },
@@ -1605,70 +1628,19 @@
       'Other': { icon: '⚙️', color: '#94a3b8' }
     };
 
-    // Profiles Configuration
-    const DEFAULT_PROFILES = [
-      { id: 'iddi', name: 'Iddi', avatar: '👨🏾‍💻' },
-      { id: 'sister', name: 'Sister', avatar: '🌸' }
-    ];
-
-    let profiles = JSON.parse(localStorage.getItem('craft_profiles') || 'null');
-    if (!profiles || !Array.isArray(profiles) || profiles.length === 0) {
-      profiles = DEFAULT_PROFILES;
-      localStorage.setItem('craft_profiles', JSON.stringify(profiles));
-    }
-
-    let activeProfileId = localStorage.getItem('craft_active_profile_id') || 'iddi';
-    if (!profiles.find(p => p.id === activeProfileId)) {
-      activeProfileId = profiles[0].id;
-      localStorage.setItem('craft_active_profile_id', activeProfileId);
-    }
-
-    // Helper functions for profile data
-    function getExpensesForProfile(pId) {
-      const specific = localStorage.getItem(`craft_expenses_${pId}`);
-      if (specific) {
-        try { return JSON.parse(specific); } catch(e) {}
+    // Load initial expenses from private localStorage
+    let expenses = JSON.parse(localStorage.getItem('craft_expenses') || 'null');
+    if (!expenses) {
+      const iddiData = localStorage.getItem('craft_expenses_iddi');
+      if (iddiData) {
+        try { expenses = JSON.parse(iddiData); } catch(e) { expenses = []; }
+      } else {
+        expenses = [];
       }
-      if (pId === 'iddi') {
-        const legacy = localStorage.getItem('craft_expenses');
-        if (legacy) {
-          try {
-            const parsed = JSON.parse(legacy);
-            localStorage.setItem(`craft_expenses_iddi`, JSON.stringify(parsed));
-            return parsed;
-          } catch(e) {}
-        }
-      }
-      return [];
+      localStorage.setItem('craft_expenses', JSON.stringify(expenses));
     }
 
-    function saveExpensesForProfile(pId, list) {
-      localStorage.setItem(`craft_expenses_${pId}`, JSON.stringify(list));
-      if (pId === 'iddi') {
-        localStorage.setItem('craft_expenses', JSON.stringify(list)); // legacy sync
-      }
-    }
-
-    function getBudgetForProfile(pId) {
-      const val = localStorage.getItem(`craft_budget_target_${pId}`);
-      if (val) return Number(val) || 250000;
-      if (pId === 'iddi') {
-        const legacy = localStorage.getItem('craft_budget_target');
-        if (legacy) return Number(legacy) || 250000;
-      }
-      return 250000;
-    }
-
-    function saveBudgetForProfile(pId, val) {
-      localStorage.setItem(`craft_budget_target_${pId}`, val);
-      if (pId === 'iddi') {
-        localStorage.setItem('craft_budget_target', val);
-      }
-    }
-
-    // Load active profile data
-    let expenses = getExpensesForProfile(activeProfileId);
-    let budgetTarget = getBudgetForProfile(activeProfileId);
+    let budgetTarget = Number(localStorage.getItem('craft_budget_target')) || 250000;
 
     // Month Navigation State
     function getCurrentMonthKey() {
@@ -1678,13 +1650,111 @@
       return `${y}-${m}`; // e.g. "2026-11"
     }
 
-    let selectedMonth = getCurrentMonthKey(); // default to current month
+    let selectedMonth = getCurrentMonthKey();
     let activeFilter = 'all';
     let currentEditingId = null;
     let activeFormCategory = 'Groceries';
 
     // Cloud configuration
     let cloudConfig = JSON.parse(localStorage.getItem('craft_cloud_config') || '{}');
+
+    // PIN State
+    let activePinEntry = '';
+    const storedPin = localStorage.getItem('craft_pin') || '';
+
+    // ==========================================
+    // PRIVACY PIN ENGINE
+    // ==========================================
+    function checkPinOnStartup() {
+      if (storedPin && storedPin.length === 4) {
+        document.getElementById('pin-lock-modal').style.display = 'flex';
+        activePinEntry = '';
+        renderPinDots();
+      }
+    }
+
+    function enterPinDigit(digit) {
+      triggerHaptic(10);
+      if (activePinEntry.length < 4) {
+        activePinEntry += digit;
+        renderPinDots();
+        if (activePinEntry.length === 4) {
+          setTimeout(verifyPin, 100);
+        }
+      }
+    }
+
+    function renderPinDots() {
+      for (let i = 0; i < 4; i++) {
+        const dot = document.getElementById(`pdot-${i}`);
+        if (dot) dot.className = i < activePinEntry.length ? 'pin-dot filled' : 'pin-dot';
+      }
+    }
+
+    function clearPinInput() {
+      triggerHaptic(10);
+      activePinEntry = '';
+      renderPinDots();
+    }
+
+    function backspacePinInput() {
+      triggerHaptic(10);
+      if (activePinEntry.length > 0) {
+        activePinEntry = activePinEntry.slice(0, -1);
+        renderPinDots();
+      }
+    }
+
+    function verifyPin() {
+      if (activePinEntry === storedPin) {
+        triggerHaptic(20);
+        document.getElementById('pin-lock-modal').style.display = 'none';
+        showToast('Unlocked! Welcome back 👋');
+      } else {
+        triggerHaptic(30);
+        showToast('Incorrect PIN. Try again.');
+        clearPinInput();
+      }
+    }
+
+    function promptSetNewPin() {
+      triggerHaptic(10);
+      const newPin = prompt('Enter a 4-digit PIN to lock your spend tracker:');
+      if (!newPin) return;
+      if (!/^\d{4}$/.test(newPin.trim())) {
+        alert('PIN must be exactly 4 numbers (e.g. 1234).');
+        return;
+      }
+      localStorage.setItem('craft_pin', newPin.trim());
+      showToast('PIN Protection Enabled! 🔒');
+      renderPinSettings();
+    }
+
+    function removeCurrentPin() {
+      triggerHaptic(10);
+      if (confirm('Remove PIN lock? Anyone holding this phone will be able to view transactions.')) {
+        localStorage.removeItem('craft_pin');
+        showToast('PIN Protection Removed');
+        renderPinSettings();
+      }
+    }
+
+    function renderPinSettings() {
+      const pin = localStorage.getItem('craft_pin');
+      const box = document.getElementById('pin-settings-controls');
+      if (pin) {
+        box.innerHTML = `
+          <span style="font-size: 12px; font-weight: 800; color: var(--accent-green); flex: 1;">✓ PIN Protected</span>
+          <button class="btn-primary" style="margin: 0; padding: 10px 14px; font-size: 12px;" onclick="promptSetNewPin()">Change</button>
+          <button class="btn-danger-outline" style="padding: 10px 14px; font-size: 12px;" onclick="removeCurrentPin()">Remove</button>
+        `;
+      } else {
+        box.innerHTML = `
+          <span style="font-size: 12px; font-weight: 600; color: var(--text-muted); flex: 1;">No PIN set (App opens directly)</span>
+          <button class="btn-primary" style="margin: 0; padding: 10px 16px; font-size: 12px;" onclick="promptSetNewPin()">Set PIN</button>
+        `;
+      }
+    }
 
     // ==========================================
     // UTILITY HELPERS
@@ -1712,20 +1782,18 @@
 
     function getDaysInMonth(monthKey) {
       const [y, m] = monthKey.split('-').map(Number);
-      return new Date(y, m, 0).getDate(); // e.g. 30 for Nov, 31 for Oct
+      return new Date(y, m, 0).getDate();
     }
 
     function getAvailableMonths() {
       const set = new Set();
-      set.add(getCurrentMonthKey()); // current month (e.g. 2026-11)
+      set.add(getCurrentMonthKey()); // e.g. 2026-11
 
-      // Always include previous month so October is always accessible
       const now = new Date();
       const prevDate = new Date(now.getFullYear(), now.getMonth() - 1, 1);
       const prevKey = `${prevDate.getFullYear()}-${String(prevDate.getMonth() + 1).padStart(2, '0')}`;
-      set.add(prevKey);
+      set.add(prevKey); // always include October 2026
 
-      // Add all months from recorded expenses
       expenses.forEach(e => {
         set.add(getExpenseMonthKey(e.date || e.created_at));
       });
@@ -1784,16 +1852,10 @@
     // RENDERING LOGIC
     // ==========================================
     function renderApp() {
-      updateProfileHeaders();
       renderHeroSummary();
       renderCategoryGrid();
       renderLedgerFeed();
       updateSyncStatus();
-    }
-
-    function updateProfileHeaders() {
-      const curProfile = profiles.find(p => p.id === activeProfileId) || profiles[0];
-      document.getElementById('header-profile-tag').textContent = curProfile.name;
     }
 
     function renderHeroSummary() {
@@ -1802,11 +1864,10 @@
       const monthTitle = getMonthFullTitle(selectedMonth);
       const monthShort = getMonthName(selectedMonth);
 
-      // Filter expenses for this selected month
+      // Filter expenses strictly for selected month
       const monthExpenses = expenses.filter(e => getExpenseMonthKey(e.date || e.created_at) === selectedMonth);
       const total = monthExpenses.reduce((sum, e) => sum + (Number(e.amount) || 0), 0);
 
-      // Hero Title and Month Pill
       document.getElementById('hero-month-title').textContent = `${monthTitle} Total Outlay`;
       document.getElementById('current-month-name').textContent = `${monthShort} ▾`;
       document.getElementById('hero-total-val').textContent = formatRWF(total);
@@ -1841,7 +1902,6 @@
         document.getElementById('burn-rate-text').textContent = `Allowance: ${formatRWF(dailyAllowance)} RWF/d`;
         document.getElementById('days-remaining-text').textContent = `${daysLeft} days left in ${monthShort.split(' ')[0]}`;
       } else {
-        // Closed / Past Month
         const diff = budgetTarget - total;
         if (diff >= 0) {
           document.getElementById('burn-rate-text').textContent = `Status: Under budget by ${formatRWF(diff)} RWF`;
@@ -1873,7 +1933,6 @@
       const activeCount = sorted.filter(s => s[1] > 0).length;
       document.getElementById('cat-count-sub').textContent = `${activeCount} Active`;
 
-      // Show top 4 categories
       const displayCats = sorted.slice(0, 4);
 
       grid.innerHTML = displayCats.map(([cat, amt]) => {
@@ -1901,8 +1960,6 @@
 
     function renderLedgerFeed() {
       const feed = document.getElementById('tx-ledger-container');
-      
-      // Filter by both selected month and active category
       const monthExpenses = expenses.filter(e => getExpenseMonthKey(e.date || e.created_at) === selectedMonth);
       const filtered = activeFilter === 'all' 
         ? monthExpenses 
@@ -1925,7 +1982,6 @@
         return;
       }
 
-      // Group by date string
       const groups = {};
       filtered.forEach(e => {
         const dStr = formatHeaderDate(e.date || e.created_at);
@@ -2007,7 +2063,6 @@
     // ==========================================
     // EXPENSE MODAL CONTROLS
     // ==========================================
-
     function openExpenseSheet() {
       triggerHaptic(12);
       currentEditingId = null;
@@ -2019,12 +2074,10 @@
       document.getElementById('inp-desc').value = '';
       document.getElementById('inp-note').value = '';
 
-      // Default date to today
       const todayISO = new Date().toISOString().slice(0, 10);
       document.getElementById('inp-date').value = todayISO;
 
       selectFormCategory('Groceries');
-
       document.getElementById('expense-modal').classList.add('open');
       setTimeout(() => document.getElementById('inp-amount').focus(), 140);
     }
@@ -2055,7 +2108,6 @@
         b.classList.toggle('active', b.getAttribute('data-cat') === cat);
       });
 
-      // Autofill description if empty or default
       const descInput = document.getElementById('inp-desc');
       if (!descInput.value.trim() || Object.keys(DEFAULT_CATEGORIES).includes(descInput.value.trim())) {
         descInput.value = cat;
@@ -2118,7 +2170,6 @@
       const chosenDate = dateInput.value ? new Date(dateInput.value).toISOString() : new Date().toISOString();
 
       if (currentEditingId) {
-        // Update existing transaction
         const idx = expenses.findIndex(e => e.id === currentEditingId);
         if (idx !== -1) {
           expenses[idx] = {
@@ -2133,7 +2184,6 @@
           syncExpenseToCloud(expenses[idx], 'UPDATE');
         }
       } else {
-        // Create new transaction
         const newRecord = {
           id: `exp_${Date.now()}_${Math.random().toString(36).slice(2, 7)}`,
           amount,
@@ -2147,14 +2197,13 @@
         showToast(`Logged: ${desc} (${formatRWF(amount)} RWF)`);
         syncExpenseToCloud(newRecord, 'INSERT');
 
-        // If transaction is in a different month, navigate to it so user sees it
         const entryMonth = getExpenseMonthKey(chosenDate);
         if (entryMonth !== selectedMonth) {
           selectedMonth = entryMonth;
         }
       }
 
-      saveExpensesForProfile(activeProfileId, expenses);
+      localStorage.setItem('craft_expenses', JSON.stringify(expenses));
       closeExpenseSheet();
       renderApp();
     }
@@ -2165,7 +2214,7 @@
         triggerHaptic(20);
         const idToDelete = currentEditingId;
         expenses = expenses.filter(e => e.id !== idToDelete);
-        saveExpensesForProfile(activeProfileId, expenses);
+        localStorage.setItem('craft_expenses', JSON.stringify(expenses));
         syncExpenseToCloud({ id: idToDelete }, 'DELETE');
         closeExpenseSheet();
         renderApp();
@@ -2205,7 +2254,6 @@
       container.innerHTML = months.map(mKey => {
         const isCurrent = (mKey === currentMonthKey);
         const mTitle = getMonthFullTitle(mKey);
-        const mShort = getMonthName(mKey);
         const daysInMonth = getDaysInMonth(mKey);
 
         const mExpenses = expenses.filter(e => getExpenseMonthKey(e.date || e.created_at) === mKey);
@@ -2213,7 +2261,6 @@
         const pct = budgetTarget > 0 ? Math.min(100, Math.round((total / budgetTarget) * 100)) : 0;
         const diff = budgetTarget - total;
 
-        // Top categories
         const catMap = {};
         mExpenses.forEach(e => {
           catMap[e.category] = (catMap[e.category] || 0) + (Number(e.amount) || 0);
@@ -2304,10 +2351,8 @@
     function copyMonthSummary(mKey, total, pct, diff, count) {
       triggerHaptic(12);
       const mTitle = getMonthFullTitle(mKey);
-      const curProfile = profiles.find(p => p.id === activeProfileId) || profiles[0];
       
       const summaryText = `📊 Craft Spend — ${mTitle} Summary
-👤 Profile: ${curProfile.name}
 💰 Total Outlay: ${formatRWF(total)} RWF
 🎯 Budget Target: ${formatRWF(budgetTarget)} RWF (${pct}% used)
 ⚖️ Balance: ${diff >= 0 ? `Under budget by ${formatRWF(diff)} RWF 🎉` : `Over budget by ${formatRWF(Math.abs(diff))} RWF`}
@@ -2323,91 +2368,25 @@ Tracked with Craft Spend (Kigali Ledger)`;
     }
 
     // ==========================================
-    // MULTI-PROFILE SYSTEM (IDDI & SISTER)
+    // SISTER'S DEDICATED APP SHARING
     // ==========================================
-    function openProfileModal() {
+    function copySisterAppUrl() {
       triggerHaptic(10);
-      renderProfilesList();
-      document.getElementById('profile-modal').classList.add('open');
-    }
-
-    function closeProfileModal() {
-      document.getElementById('profile-modal').classList.remove('open');
-    }
-
-    function renderProfilesList() {
-      const container = document.getElementById('profiles-list-container');
-      container.innerHTML = profiles.map(p => {
-        const isActive = (p.id === activeProfileId);
-        const pExpenses = getExpensesForProfile(p.id);
-        const pTotal = pExpenses.reduce((s, e) => s + (Number(e.amount) || 0), 0);
-
-        return `
-          <div class="profile-card ${isActive ? 'active' : ''}" onclick="switchProfile('${p.id}')">
-            <div class="profile-info">
-              <div class="profile-avatar">${p.avatar || '👤'}</div>
-              <div>
-                <div class="profile-name">${escapeHtml(p.name)}</div>
-                <div class="profile-sub">${pExpenses.length} transactions recorded (${formatRWF(pTotal)} RWF total)</div>
-              </div>
-            </div>
-            ${isActive ? `<span class="profile-badge-active">Active</span>` : `<span style="font-size: 12px; color: var(--text-muted); font-weight: 700;">Select ›</span>`}
-          </div>
-        `;
-      }).join('');
-    }
-
-    function switchProfile(pId) {
-      if (activeProfileId === pId) {
-        closeProfileModal();
-        return;
-      }
-      triggerHaptic(15);
-      activeProfileId = pId;
-      localStorage.setItem('craft_active_profile_id', activeProfileId);
-
-      // Reload state for newly selected profile
-      expenses = getExpensesForProfile(activeProfileId);
-      budgetTarget = getBudgetForProfile(activeProfileId);
-
-      closeProfileModal();
-      renderApp();
-      const p = profiles.find(x => x.id === pId);
-      showToast(`Switched to ${p ? p.name : 'Profile'}! 🎉`);
-    }
-
-    function promptAddNewProfile() {
-      triggerHaptic(10);
-      const name = prompt("Enter new profile name (e.g. Marie, Household, Travel):");
-      if (!name || !name.trim()) return;
-
-      const newId = `profile_${Date.now()}`;
-      const newProfile = {
-        id: newId,
-        name: name.trim(),
-        avatar: '👤'
-      };
-
-      profiles.push(newProfile);
-      localStorage.setItem('craft_profiles', JSON.stringify(profiles));
-      switchProfile(newId);
-    }
-
-    function copySisterShareLink() {
-      triggerHaptic(10);
-      const link = window.location.origin + window.location.pathname;
+      const base = window.location.origin + window.location.pathname.replace(/\/index\.html$/, '').replace(/\/$/, '');
+      const sisterUrl = `${base}/sister/`;
       if (navigator.clipboard && navigator.clipboard.writeText) {
-        navigator.clipboard.writeText(link);
-        showToast('Copied app link! Send it to her 📲');
+        navigator.clipboard.writeText(sisterUrl);
+        showToast("Copied Sister's private link! 🌸");
       } else {
-        alert(`Share this link with your sister:\n${link}`);
+        alert(`Sister's private link:\n${sisterUrl}`);
       }
     }
 
-    function shareSisterWhatsApp() {
+    function shareSisterAppWhatsApp() {
       triggerHaptic(10);
-      const link = window.location.origin + window.location.pathname;
-      const text = encodeURIComponent(`Hi! Here is the Craft Spend app we talked about for tracking daily expenses in Kigali (super simple, offline-first): ${link}`);
+      const base = window.location.origin + window.location.pathname.replace(/\/index\.html$/, '').replace(/\/$/, '');
+      const sisterUrl = `${base}/sister/`;
+      const text = encodeURIComponent(`Hi! Here is your private Craft Spend app for tracking daily expenses in Kigali: ${sisterUrl}`);
       window.open(`https://wa.me/?text=${text}`, '_blank');
     }
 
@@ -2416,11 +2395,10 @@ Tracked with Craft Spend (Kigali Ledger)`;
     // ==========================================
     function openSettingsModal() {
       triggerHaptic(10);
-      const curProfile = profiles.find(p => p.id === activeProfileId) || profiles[0];
-      document.getElementById('cfg-budget-title').textContent = `🎯 ${curProfile.name}'s Monthly Budget Target`;
       document.getElementById('cfg-budget').value = budgetTarget;
       document.getElementById('cfg-supabase-url').value = cloudConfig.url || '';
       document.getElementById('cfg-supabase-key').value = cloudConfig.key || '';
+      renderPinSettings();
       document.getElementById('settings-modal').classList.add('open');
     }
 
@@ -2432,7 +2410,7 @@ Tracked with Craft Spend (Kigali Ledger)`;
       triggerHaptic(12);
       const val = Number(document.getElementById('cfg-budget').value) || 250000;
       budgetTarget = val;
-      saveBudgetForProfile(activeProfileId, budgetTarget);
+      localStorage.setItem('craft_budget_target', budgetTarget);
       showToast('Budget saved: ' + formatRWF(budgetTarget) + ' RWF');
       renderHeroSummary();
     }
@@ -2509,7 +2487,7 @@ Tracked with Craft Spend (Kigali Ledger)`;
           await fetch(`${cloudConfig.url}/rest/v1/expenses`, {
             method: 'POST',
             headers,
-            body: JSON.stringify({ ...item, profile: activeProfileId })
+            body: JSON.stringify(item)
           });
         } else if (action === 'DELETE') {
           await fetch(`${cloudConfig.url}/rest/v1/expenses?id=eq.${item.id}`, {
@@ -2542,7 +2520,7 @@ Tracked with Craft Spend (Kigali Ledger)`;
             expenses.forEach(e => map.set(e.id, e));
             remote.forEach(e => map.set(e.id, e));
             expenses = Array.from(map.values());
-            saveExpensesForProfile(activeProfileId, expenses);
+            localStorage.setItem('craft_expenses', JSON.stringify(expenses));
             renderApp();
             showToast('Synced from Cloud');
           }
@@ -2557,12 +2535,10 @@ Tracked with Craft Spend (Kigali Ledger)`;
     // ==========================================
     function exportJSONBackup() {
       triggerHaptic(10);
-      const curProfile = profiles.find(p => p.id === activeProfileId) || profiles[0];
       const data = {
         app: 'Craft Spend',
-        version: '3.0',
+        version: '4.0',
         exported_at: new Date().toISOString(),
-        profile: curProfile.name,
         budgetTarget,
         expenses
       };
@@ -2571,14 +2547,13 @@ Tracked with Craft Spend (Kigali Ledger)`;
       const a = document.createElement('a');
       const dStr = new Date().toISOString().split('T')[0];
       a.href = URL.createObjectURL(blob);
-      a.download = `craft-spend-${curProfile.name.toLowerCase()}-${dStr}.json`;
+      a.download = `craft-spend-backup-${dStr}.json`;
       a.click();
       showToast('Downloaded JSON Backup');
     }
 
     function exportCSV() {
       triggerHaptic(10);
-      const curProfile = profiles.find(p => p.id === activeProfileId) || profiles[0];
       if (expenses.length === 0) {
         showToast('No expenses to export');
         return;
@@ -2601,7 +2576,7 @@ Tracked with Craft Spend (Kigali Ledger)`;
       const a = document.createElement('a');
       const dStr = new Date().toISOString().split('T')[0];
       a.href = URL.createObjectURL(blob);
-      a.download = `craft-spend-${curProfile.name.toLowerCase()}-${dStr}.csv`;
+      a.download = `craft-spend-${dStr}.csv`;
       a.click();
       showToast('Exported CSV');
     }
@@ -2623,8 +2598,8 @@ Tracked with Craft Spend (Kigali Ledger)`;
             return;
           }
           if (parsed.budgetTarget) budgetTarget = parsed.budgetTarget;
-          saveExpensesForProfile(activeProfileId, expenses);
-          saveBudgetForProfile(activeProfileId, budgetTarget);
+          localStorage.setItem('craft_expenses', JSON.stringify(expenses));
+          localStorage.setItem('craft_budget_target', budgetTarget);
           closeSettingsModal();
           renderApp();
           showToast('Restored successfully! 🎉');
@@ -2648,7 +2623,6 @@ Tracked with Craft Spend (Kigali Ledger)`;
       if (meta) meta.setAttribute('content', next === 'light' ? '#f1f5f9' : '#070a12');
     }
 
-    // Initialize Theme (default to dark)
     const savedTheme = localStorage.getItem('craft_theme') || 'dark';
     document.documentElement.setAttribute('data-theme', savedTheme);
     const meta = document.querySelector('meta[name="theme-color"]');
@@ -2663,7 +2637,8 @@ Tracked with Craft Spend (Kigali Ledger)`;
       });
     }
 
-    // Initial render
+    // Initial Startup
+    checkPinOnStartup();
     renderApp();
     if (cloudConfig.url && cloudConfig.key) {
       pullAllFromCloud();
