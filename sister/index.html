@@ -11,7 +11,7 @@
   <link rel="manifest" href="../manifest.json">
   <link rel="apple-touch-icon" href="../apple-touch-icon.png">
   <link rel="icon" type="image/png" href="../icon-192.png">
-  <title>Craft Spend — Kigali Expense Tracker</title>
+  <title>Craft Spend — Sister's Expense Tracker (TZS)</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700;800&display=swap" rel="stylesheet">
@@ -1365,19 +1365,19 @@
 
       <div class="hero-amount">
         <span id="hero-total-val">0</span>
-        <span class="hero-currency">RWF</span>
+        <span class="hero-currency">TZS</span>
       </div>
 
       <div class="budget-section">
         <div class="budget-meta">
           <span>Budget Usage</span>
-          <span id="budget-ratio-text">0 / 250,000 RWF (0%)</span>
+          <span id="budget-ratio-text">0 / 500,000 TZS (0%)</span>
         </div>
         <div class="budget-track">
           <div class="budget-fill" id="budget-bar"></div>
         </div>
         <div class="burn-rate-row">
-          <span class="micro-chip" id="burn-rate-text">Allowance: 0 RWF/day</span>
+          <span class="micro-chip" id="burn-rate-text">Allowance: 0 TZS/day</span>
           <span class="micro-chip" id="days-remaining-text">29 days left in Nov</span>
         </div>
       </div>
@@ -1436,10 +1436,10 @@
         <button class="btn-close" onclick="closeExpenseSheet()">✕</button>
       </div>
 
-      <!-- Amount Input with RWF symbol -->
+      <!-- Amount Input with TZS symbol -->
       <div class="amount-input-box">
         <input type="number" id="inp-amount" class="amount-input" placeholder="0" inputmode="numeric" pattern="[0-9]*" autofocus>
-        <span class="amount-curr-tag">RWF</span>
+        <span class="amount-curr-tag">TZS</span>
       </div>
 
       <!-- Denomination Steppers -->
@@ -1495,7 +1495,7 @@
       <!-- Description & Note -->
       <div class="input-group">
         <div class="picker-label">Description / Merchant</div>
-        <input type="text" id="inp-desc" class="input-field" placeholder="e.g. Simba Supermarket, Total pump, Café Neo">
+        <input type="text" id="inp-desc" class="input-field" placeholder="e.g. Shoppers Plaza, Mlimani City, Chai, Puma pump">
       </div>
 
       <div class="input-group">
@@ -1547,10 +1547,10 @@
 
       <!-- Monthly Budget Target -->
       <div class="settings-card">
-        <h4>🎯 Monthly Budget Target</h4>
+        <h4>🎯 Monthly Budget Target (TZS)</h4>
         <p>Set your target spending limit to track your burn rate.</p>
         <div style="display: flex; gap: 8px;">
-          <input type="number" id="cfg-budget" class="input-field" style="flex: 1;" placeholder="250000">
+          <input type="number" id="cfg-budget" class="input-field" style="flex: 1;" placeholder="500000">
           <button class="btn-primary" style="margin-top: 0; padding: 12px 18px;" onclick="saveBudgetTarget()">Save</button>
         </div>
       </div>
@@ -1615,7 +1615,7 @@
     // Load initial expenses from private localStorage
     let expenses = JSON.parse(localStorage.getItem('sister_expenses') || '[]');
 
-    let budgetTarget = Number(localStorage.getItem('sister_budget_target')) || 250000;
+    let budgetTarget = Number(localStorage.getItem('sister_budget_target')) || 500000;
 
     // Month Navigation State
     function getCurrentMonthKey() {
@@ -1787,10 +1787,12 @@
       return 'Other';
     }
 
-    function formatRWF(val) {
+    function formatCurrency(val) {
       const num = Math.round(Number(val) || 0);
       return num.toLocaleString('en-US');
     }
+    const formatTZS = formatCurrency;
+    const formatRWF = formatCurrency;
 
     function showToast(msg) {
       const t = document.getElementById('toast-pill');
@@ -1862,7 +1864,7 @@
       bar.style.width = pct + '%';
       bar.className = 'budget-fill' + (pct > 90 ? ' danger' : pct > 75 ? ' warning' : '');
 
-      document.getElementById('budget-ratio-text').textContent = `${formatRWF(total)} / ${formatRWF(budgetTarget)} RWF (${pct}%)`;
+      document.getElementById('budget-ratio-text').textContent = `${formatCurrency(total)} / ${formatCurrency(budgetTarget)} TZS (${pct}%)`;
 
       // Burn rate calculation
       const totalDays = getDaysInMonth(selectedMonth);
@@ -1874,14 +1876,14 @@
         const daysLeft = Math.max(1, totalDays - currentDay);
         const dailyAllowance = Math.round(remainingBudget / daysLeft);
 
-        document.getElementById('burn-rate-text').textContent = `Allowance: ${formatRWF(dailyAllowance)} RWF/d`;
+        document.getElementById('burn-rate-text').textContent = `Allowance: ${formatRWF(dailyAllowance)} TZS/d`;
         document.getElementById('days-remaining-text').textContent = `${daysLeft} days left in ${monthShort.split(' ')[0]}`;
       } else {
         const diff = budgetTarget - total;
         if (diff >= 0) {
-          document.getElementById('burn-rate-text').textContent = `Status: Under budget by ${formatRWF(diff)} RWF`;
+          document.getElementById('burn-rate-text').textContent = `Status: Under budget by ${formatRWF(diff)} TZS`;
         } else {
-          document.getElementById('burn-rate-text').textContent = `Status: Over budget by ${formatRWF(Math.abs(diff))} RWF`;
+          document.getElementById('burn-rate-text').textContent = `Status: Over budget by ${formatRWF(Math.abs(diff))} TZS`;
         }
         document.getElementById('days-remaining-text').textContent = `${totalDays}/${totalDays} days (Closed)`;
       }
@@ -1924,7 +1926,7 @@
               </div>
               <span class="cat-share">${share}%</span>
             </div>
-            <div class="cat-amount">${formatRWF(amt)} RWF</div>
+            <div class="cat-amount">${formatCurrency(amt)} TZS</div>
             <div class="cat-bar-mini">
               <div class="cat-bar-fill" style="width: ${share}%;"></div>
             </div>
@@ -1978,7 +1980,7 @@
                   <div class="tx-subtitle">${escapeHtml(item.note || item.category)}</div>
                 </div>
               </div>
-              <div class="tx-amount">-${formatRWF(item.amount)} RWF</div>
+              <div class="tx-amount">-${formatCurrency(item.amount)} TZS</div>
             </div>
           `;
         });
@@ -2135,7 +2137,7 @@
 
       const amount = Math.round(Number(amtInput.value) || 0);
       if (amount <= 0) {
-        alert('Please enter a valid amount in RWF.');
+        alert('Please enter a valid amount in TZS.');
         amtInput.focus();
         return;
       }
@@ -2155,7 +2157,7 @@
             note,
             date: chosenDate
           };
-          showToast(`Updated: ${desc} (${formatRWF(amount)} RWF)`);
+          showToast(`Updated: ${desc} (${formatCurrency(amount)} TZS)`);
           syncExpenseToCloud(expenses[idx], 'UPDATE');
         }
       } else {
@@ -2169,7 +2171,7 @@
           created_at: new Date().toISOString()
         };
         expenses.unshift(newRecord);
-        showToast(`Logged: ${desc} (${formatRWF(amount)} RWF)`);
+        showToast(`Logged: ${desc} (${formatCurrency(amount)} TZS)`);
         syncExpenseToCloud(newRecord, 'INSERT');
 
         const entryMonth = getExpenseMonthKey(chosenDate);
@@ -2259,7 +2261,7 @@
               <div class="budget-meta">
                 <span>Total Outlay</span>
                 <span style="font-family: var(--font-mono); font-weight: 800; color: var(--text-main); font-size: 14px;">
-                  ${formatRWF(total)} / ${formatRWF(budgetTarget)} RWF (${pct}%)
+                  ${formatCurrency(total)} / ${formatCurrency(budgetTarget)} TZS (${pct}%)
                 </span>
               </div>
               <div class="budget-track">
@@ -2273,7 +2275,7 @@
                 <span class="report-kpi-lbl">Entries</span>
               </div>
               <div class="report-kpi-box">
-                <span class="report-kpi-val">${formatRWF(avgDaily)}</span>
+                <span class="report-kpi-val">${formatCurrency(avgDaily)} TZS/d</span>
                 <span class="report-kpi-lbl">Daily Avg</span>
               </div>
               <div class="report-kpi-box">
@@ -2296,7 +2298,7 @@
                         <span>${info.icon}</span>
                         <span>${cat}</span>
                       </div>
-                      <span class="report-cat-amt">${formatRWF(amt)} RWF (${share}%)</span>
+                      <span class="report-cat-amt">${formatCurrency(amt)} TZS (${share}%)</span>
                     </div>
                   `;
                 }).join('')}
@@ -2328,11 +2330,11 @@
       const mTitle = getMonthFullTitle(mKey);
       
       const summaryText = `📊 Craft Spend — ${mTitle} Summary
-💰 Total Outlay: ${formatRWF(total)} RWF
-🎯 Budget Target: ${formatRWF(budgetTarget)} RWF (${pct}% used)
-⚖️ Balance: ${diff >= 0 ? `Under budget by ${formatRWF(diff)} RWF 🎉` : `Over budget by ${formatRWF(Math.abs(diff))} RWF`}
+💰 Total Outlay: ${formatCurrency(total)} TZS
+🎯 Budget Target: ${formatCurrency(budgetTarget)} TZS (${pct}% used)
+⚖️ Balance: ${diff >= 0 ? `Under budget by ${formatCurrency(diff)} TZS 🎉` : `Over budget by ${formatCurrency(Math.abs(diff))} TZS`}
 📝 Total Transactions: ${count}
-Tracked with Craft Spend (Kigali Ledger)`;
+Tracked with Craft Spend (Sister's Ledger)`;
 
       if (navigator.clipboard && navigator.clipboard.writeText) {
         navigator.clipboard.writeText(summaryText);
@@ -2361,10 +2363,10 @@ Tracked with Craft Spend (Kigali Ledger)`;
 
     function saveBudgetTarget() {
       triggerHaptic(12);
-      const val = Number(document.getElementById('cfg-budget').value) || 250000;
+      const val = Number(document.getElementById('cfg-budget').value) || 500000;
       budgetTarget = val;
       localStorage.setItem('sister_budget_target', budgetTarget);
-      showToast('Budget saved: ' + formatRWF(budgetTarget) + ' RWF');
+      showToast('Budget saved: ' + formatCurrency(budgetTarget) + ' TZS');
       renderHeroSummary();
     }
 
@@ -2512,7 +2514,7 @@ Tracked with Craft Spend (Kigali Ledger)`;
         return;
       }
 
-      let csv = 'ID,Date,Category,Description,Amount (RWF),Note\n';
+      let csv = 'ID,Date,Category,Description,Amount (TZS),Note\n';
       expenses.forEach(e => {
         const row = [
           e.id,
