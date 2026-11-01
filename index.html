@@ -450,84 +450,6 @@
       color: var(--text-muted);
     }
 
-    /* 1-Tap Kigali Quick Action Stepper Strip */
-    .quick-strip {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-lg);
-      padding: 13px 15px;
-      box-shadow: var(--card-shadow);
-      display: flex;
-      flex-direction: column;
-      gap: 9px;
-    }
-
-    .quick-strip-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .quick-strip-title {
-      font-size: 11px;
-      font-weight: 800;
-      text-transform: uppercase;
-      letter-spacing: 0.8px;
-      color: var(--text-muted);
-      display: flex;
-      align-items: center;
-      gap: 5px;
-    }
-
-    .quick-strip-sub {
-      font-size: 11px;
-      font-weight: 700;
-      color: var(--accent);
-    }
-
-    .quick-buttons-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 8px;
-    }
-
-    .quick-step-btn {
-      background: var(--surface-elevated);
-      border: 1px solid var(--border);
-      color: var(--text-main);
-      padding: 10px 4px;
-      border-radius: 14px;
-      font-family: var(--font-mono);
-      font-size: 13px;
-      font-weight: 800;
-      cursor: pointer;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 2px;
-      transition: all 0.15s ease;
-    }
-
-    .quick-step-btn .step-plus {
-      color: var(--accent);
-      font-size: 14px;
-      line-height: 1;
-    }
-
-    .quick-step-btn .step-curr {
-      font-size: 9px;
-      color: var(--text-muted);
-      font-weight: 700;
-      letter-spacing: 0.5px;
-    }
-
-    .quick-step-btn:active {
-      transform: scale(0.92);
-      background: var(--accent-glow);
-      border-color: var(--accent);
-    }
-
     /* Category Breakdown Section */
     .section-title-row {
       display: flex;
@@ -1423,32 +1345,6 @@
       </div>
     </div>
 
-    <!-- 1-Tap Kigali Quick Action Stepper Strip -->
-    <div class="quick-strip">
-      <div class="quick-strip-header">
-        <span class="quick-strip-title">⚡ Quick Log (RWF)</span>
-        <span class="quick-strip-sub">Instant 1-Tap</span>
-      </div>
-      <div class="quick-buttons-grid">
-        <button type="button" class="quick-step-btn" onclick="quickLogWithAmount(1000)">
-          <span class="step-plus">+</span>1,000
-          <span class="step-curr">Moto</span>
-        </button>
-        <button type="button" class="quick-step-btn" onclick="quickLogWithAmount(2000)">
-          <span class="step-plus">+</span>2,000
-          <span class="step-curr">Café</span>
-        </button>
-        <button type="button" class="quick-step-btn" onclick="quickLogWithAmount(5000)">
-          <span class="step-plus">+</span>5,000
-          <span class="step-curr">Market</span>
-        </button>
-        <button type="button" class="quick-step-btn" onclick="quickLogWithAmount(10000)">
-          <span class="step-plus">+</span>10,000
-          <span class="step-curr">Fuel</span>
-        </button>
-      </div>
-    </div>
-
     <!-- Category Distribution Overview -->
     <div class="section-title-row">
       <span class="section-title">Category Breakdown</span>
@@ -2109,13 +2005,8 @@
     }
 
     // ==========================================
-    // QUICK LOGGING & MODAL CONTROLS
+    // EXPENSE MODAL CONTROLS
     // ==========================================
-    function quickLogWithAmount(amt) {
-      triggerHaptic(15);
-      openExpenseSheet();
-      document.getElementById('inp-amount').value = amt;
-    }
 
     function openExpenseSheet() {
       triggerHaptic(12);

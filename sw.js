@@ -1,5 +1,5 @@
-// Craft Spend — Offline-First Service Worker v3
-const CACHE_NAME = 'craft-spend-v3';
+// Craft Spend — Offline-First Service Worker v4
+const CACHE_NAME = 'craft-spend-v4';
 const STATIC_ASSETS = [
   './',
   './index.html',
