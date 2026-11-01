@@ -107,14 +107,14 @@
       padding: calc(14px + var(--safe-top)) 16px 20px;
       display: flex;
       flex-direction: column;
-      gap: 18px;
+      gap: 16px;
     }
 
     @media (max-width: 480px) {
       .app-shell {
         padding-left: 14px;
         padding-right: 14px;
-        gap: 16px;
+        gap: 15px;
       }
     }
 
@@ -130,6 +130,7 @@
       display: flex;
       align-items: center;
       gap: 10px;
+      cursor: pointer;
     }
 
     .brand-logo {
@@ -157,6 +158,19 @@
       font-weight: 700;
       text-transform: uppercase;
       letter-spacing: 0.6px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .header-profile-tag {
+      color: var(--accent);
+      background: var(--surface-elevated);
+      padding: 1px 7px;
+      border-radius: 10px;
+      font-size: 10px;
+      font-weight: 800;
+      border: 1px solid var(--border);
     }
 
     .header-actions {
@@ -226,12 +240,51 @@
       100% { opacity: 0.4; }
     }
 
+    /* Past Month Alert Banner */
+    .past-month-alert {
+      background: rgba(251, 191, 36, 0.12);
+      border: 1px solid rgba(251, 191, 36, 0.35);
+      border-radius: var(--radius-md);
+      padding: 10px 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--accent-warn);
+      box-shadow: var(--card-shadow);
+      animation: fadeIn 0.2s ease;
+    }
+
+    .btn-jump-current {
+      background: var(--accent-warn);
+      color: #04121d;
+      border: none;
+      border-radius: 12px;
+      padding: 5px 12px;
+      font-size: 11px;
+      font-weight: 800;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: transform 0.12s;
+    }
+
+    .btn-jump-current:active {
+      transform: scale(0.92);
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-4px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
     /* Hero Summary Card */
     .hero-card {
       background: var(--surface);
       border: 1px solid var(--border);
       border-radius: var(--radius-xl);
-      padding: 22px 20px 20px;
+      padding: 20px 20px 18px;
       position: relative;
       overflow: hidden;
       box-shadow: var(--card-shadow);
@@ -255,6 +308,7 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
+      gap: 8px;
     }
 
     .hero-label {
@@ -268,15 +322,46 @@
       gap: 6px;
     }
 
+    /* Month Navigator (Prev < Month > Next) */
+    .month-nav-wrap {
+      display: flex;
+      align-items: center;
+      gap: 2px;
+      background: var(--surface-elevated);
+      padding: 2px 4px;
+      border-radius: 24px;
+      border: 1px solid var(--border-strong);
+    }
+
+    .btn-nav-month {
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      font-size: 13px;
+      font-weight: 800;
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.12s;
+    }
+
+    .btn-nav-month:active {
+      transform: scale(0.85);
+      background: var(--surface-hover);
+      color: var(--text-main);
+    }
+
     .month-pill {
       font-size: 11px;
       font-weight: 800;
-      background: var(--accent-glow);
       color: var(--accent);
-      padding: 5px 12px;
-      border-radius: 20px;
-      border: 1px solid rgba(56, 189, 248, 0.3);
+      padding: 4px 8px;
       cursor: pointer;
+      white-space: nowrap;
     }
 
     .hero-amount {
@@ -302,8 +387,8 @@
     .budget-section {
       display: flex;
       flex-direction: column;
-      gap: 10px;
-      padding-top: 14px;
+      gap: 9px;
+      padding-top: 13px;
       border-top: 1px solid var(--border);
     }
 
@@ -370,11 +455,11 @@
       background: var(--surface);
       border: 1px solid var(--border);
       border-radius: var(--radius-lg);
-      padding: 14px 16px;
+      padding: 13px 15px;
       box-shadow: var(--card-shadow);
       display: flex;
       flex-direction: column;
-      gap: 10px;
+      gap: 9px;
     }
 
     .quick-strip-header {
@@ -410,7 +495,7 @@
       background: var(--surface-elevated);
       border: 1px solid var(--border);
       color: var(--text-main);
-      padding: 11px 4px;
+      padding: 10px 4px;
       border-radius: 14px;
       font-family: var(--font-mono);
       font-size: 13px;
@@ -755,7 +840,7 @@
       box-shadow: 0 4px 14px rgba(56, 189, 248, 0.3);
     }
 
-    .fab-btn-gear {
+    .fab-btn-side {
       width: 52px;
       height: 52px;
       border-radius: 18px;
@@ -772,7 +857,7 @@
       flex-shrink: 0;
     }
 
-    .fab-btn-gear:active {
+    .fab-btn-side:active {
       transform: scale(0.92);
       background: var(--surface-hover);
     }
@@ -1033,6 +1118,200 @@
       background: rgba(248, 113, 113, 0.15);
     }
 
+    /* Reports Modal Cards */
+    .report-card {
+      background: var(--surface-elevated);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 15px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      box-shadow: var(--card-shadow);
+    }
+
+    .report-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .report-month-title {
+      font-size: 16px;
+      font-weight: 800;
+      color: var(--text-main);
+    }
+
+    .report-status-badge {
+      font-size: 10px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      padding: 3px 8px;
+      border-radius: 8px;
+    }
+
+    .report-status-badge.active {
+      background: rgba(56, 189, 248, 0.15);
+      color: var(--accent);
+      border: 1px solid rgba(56, 189, 248, 0.3);
+    }
+
+    .report-status-badge.closed {
+      background: rgba(52, 211, 153, 0.15);
+      color: var(--accent-green);
+      border: 1px solid rgba(52, 211, 153, 0.3);
+    }
+
+    .report-kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      text-align: center;
+    }
+
+    .report-kpi-box {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 8px 6px;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .report-kpi-val {
+      font-family: var(--font-mono);
+      font-size: 13px;
+      font-weight: 800;
+      color: var(--text-main);
+    }
+
+    .report-kpi-lbl {
+      font-size: 9px;
+      color: var(--text-muted);
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+
+    .report-top-cats {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      background: var(--surface);
+      padding: 10px 12px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+    }
+
+    .report-cat-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 12px;
+    }
+
+    .report-cat-meta {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-weight: 700;
+    }
+
+    .report-cat-amt {
+      font-family: var(--font-mono);
+      font-weight: 800;
+      color: var(--text-main);
+    }
+
+    .report-actions {
+      display: flex;
+      gap: 8px;
+      margin-top: 2px;
+    }
+
+    .btn-report-action {
+      flex: 1;
+      background: var(--surface);
+      border: 1px solid var(--border-strong);
+      color: var(--text-main);
+      padding: 9px 12px;
+      border-radius: 12px;
+      font-size: 12px;
+      font-weight: 800;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      transition: all 0.15s;
+    }
+
+    .btn-report-action:active {
+      transform: scale(0.95);
+      background: var(--accent-glow);
+      border-color: var(--accent);
+    }
+
+    /* Profile Modal Cards */
+    .profile-card {
+      background: var(--surface-elevated);
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 14px 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+      box-shadow: var(--card-shadow);
+      transition: all 0.15s;
+    }
+
+    .profile-card.active {
+      border-color: var(--accent);
+      background: var(--accent-glow);
+    }
+
+    .profile-info {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .profile-avatar {
+      width: 42px;
+      height: 42px;
+      border-radius: 14px;
+      background: var(--surface);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 21px;
+      border: 1px solid var(--border);
+    }
+
+    .profile-name {
+      font-size: 15px;
+      font-weight: 800;
+      color: var(--text-main);
+    }
+
+    .profile-sub {
+      font-size: 11px;
+      color: var(--text-muted);
+      font-weight: 600;
+    }
+
+    .profile-badge-active {
+      background: var(--accent);
+      color: #04121d;
+      font-size: 10px;
+      font-weight: 800;
+      padding: 3px 8px;
+      border-radius: 8px;
+      text-transform: uppercase;
+    }
+
     /* Settings Modal Content */
     .settings-card {
       background: var(--surface-elevated);
@@ -1090,11 +1369,11 @@
 
     <!-- Top Navigation Header -->
     <header>
-      <div class="brand-wrap">
+      <div class="brand-wrap" onclick="openProfileModal()">
         <div class="brand-logo">💳</div>
         <div class="brand-info">
           <h1>Craft Spend</h1>
-          <p>Kigali Ledger</p>
+          <p>Kigali Ledger <span class="header-profile-tag" id="header-profile-tag">Iddi</span></p>
         </div>
       </div>
       <div class="header-actions">
@@ -1107,11 +1386,21 @@
       </div>
     </header>
 
+    <!-- Past Month Alert (Shows when viewing an older closed month) -->
+    <div id="past-month-banner" class="past-month-alert" style="display: none;">
+      <span id="past-month-alert-text">📅 Viewing October 2026 (Closed)</span>
+      <button class="btn-jump-current" onclick="jumpToCurrentMonth()">Go to Today</button>
+    </div>
+
     <!-- Month Hero Card -->
     <div class="hero-card">
       <div class="hero-header">
-        <span class="hero-label">October Total Outlay</span>
-        <span class="month-pill" id="current-month-name" onclick="openSettingsModal()">Oct 2026 ▾</span>
+        <span class="hero-label" id="hero-month-title">November Total Outlay</span>
+        <div class="month-nav-wrap">
+          <button class="btn-nav-month" onclick="navigateMonth(-1)" title="Previous Month">‹</button>
+          <span class="month-pill" id="current-month-name" onclick="openReportsModal()" title="View Month Reports">Nov 2026 ▾</span>
+          <button class="btn-nav-month" onclick="navigateMonth(1)" title="Next Month">›</button>
+        </div>
       </div>
 
       <div class="hero-amount">
@@ -1128,8 +1417,8 @@
           <div class="budget-fill" id="budget-bar"></div>
         </div>
         <div class="burn-rate-row">
-          <span class="micro-chip" id="burn-rate-text">Daily: 0 RWF/day</span>
-          <span class="micro-chip" id="days-remaining-text">26 days left in Oct</span>
+          <span class="micro-chip" id="burn-rate-text">Allowance: 0 RWF/day</span>
+          <span class="micro-chip" id="days-remaining-text">29 days left in Nov</span>
         </div>
       </div>
     </div>
@@ -1196,11 +1485,12 @@
   <!-- Ergonomic Fixed Bottom Action Dock -->
   <div class="fab-dock">
     <div class="fab-dock-inner">
+      <button class="fab-btn-side" onclick="openReportsModal()" title="Month Reports">📊</button>
       <button class="fab-btn-main" onclick="openExpenseSheet()">
         <span style="font-size: 20px;">＋</span>
         <span>Log Expense</span>
       </button>
-      <button class="fab-btn-gear" onclick="openSettingsModal()" title="Settings">⚙️</button>
+      <button class="fab-btn-side" onclick="openProfileModal()" title="Switch Profile">👤</button>
     </div>
   </div>
 
@@ -1276,6 +1566,11 @@
       </div>
 
       <div class="input-group">
+        <div class="picker-label">Date (Optional / Backdating)</div>
+        <input type="date" id="inp-date" class="input-field">
+      </div>
+
+      <div class="input-group">
         <div class="picker-label">Note (Optional)</div>
         <input type="text" id="inp-note" class="input-field" placeholder="e.g. Weekly grocery stock, Saturday outing">
       </div>
@@ -1290,6 +1585,63 @@
     </div>
   </div>
 
+  <!-- Month Reports Modal (Month-on-Month) -->
+  <div class="modal-overlay" id="reports-modal" onclick="handleModalBackdrop(event, 'reports-modal')">
+    <div class="sheet-modal" onclick="event.stopPropagation()">
+      <div class="sheet-drag-handle"></div>
+      <div class="sheet-title-row">
+        <h3 class="sheet-title">📊 Month-on-Month Reports</h3>
+        <button class="btn-close" onclick="closeReportsModal()">✕</button>
+      </div>
+      <p style="font-size: 12px; color: var(--text-muted); margin-top: -6px;">
+        Review your monthly spend history, compare burn rates against targets, and archive closed months.
+      </p>
+
+      <div id="reports-list-container" style="display: flex; flex-direction: column; gap: 14px;">
+        <!-- Injected dynamically -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Profiles Switcher Modal (Iddi & Sister) -->
+  <div class="modal-overlay" id="profile-modal" onclick="handleModalBackdrop(event, 'profile-modal')">
+    <div class="sheet-modal" onclick="event.stopPropagation()">
+      <div class="sheet-drag-handle"></div>
+      <div class="sheet-title-row">
+        <h3 class="sheet-title">👤 Switch Account / Profile</h3>
+        <button class="btn-close" onclick="closeProfileModal()">✕</button>
+      </div>
+      <p style="font-size: 12px; color: var(--text-muted); margin-top: -6px;">
+        Each profile has its own private expenses, monthly budgets, and reports.
+      </p>
+
+      <!-- Profiles List -->
+      <div id="profiles-list-container" style="display: flex; flex-direction: column; gap: 10px;">
+        <!-- Injected dynamically -->
+      </div>
+
+      <button type="button" class="btn-primary" style="margin-top: 4px; padding: 13px;" onclick="promptAddNewProfile()">
+        <span>＋ Create New Profile</span>
+      </button>
+
+      <!-- Share with Sister Box -->
+      <div class="settings-card" style="margin-top: 6px;">
+        <h4>📱 Want your Sister to use it on her own phone?</h4>
+        <p>
+          She doesn't need to do any technical setup! Simply send her your app link. Her phone's browser will keep her own private ledger completely separate from yours:
+        </p>
+        <div style="display: flex; gap: 8px; margin-top: 4px; flex-wrap: wrap;">
+          <button class="btn-primary" style="flex: 1; margin: 0; padding: 12px; font-size: 13px;" onclick="copySisterShareLink()">
+            📋 Copy App Link
+          </button>
+          <button class="btn-primary" style="flex: 1; margin: 0; padding: 12px; font-size: 13px; background: #25d366; color: #fff;" onclick="shareSisterWhatsApp()">
+            💬 Share via WhatsApp
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- Settings & Cloud Sync Modal -->
   <div class="modal-overlay" id="settings-modal" onclick="handleModalBackdrop(event, 'settings-modal')">
     <div class="sheet-modal" onclick="event.stopPropagation()">
@@ -1301,8 +1653,8 @@
 
       <!-- Monthly Budget Target -->
       <div class="settings-card">
-        <h4>🎯 October Budget Target</h4>
-        <p>Set your target spending limit for October to track your burn rate.</p>
+        <h4 id="cfg-budget-title">🎯 Monthly Budget Target</h4>
+        <p>Set your target spending limit for this profile to track your burn rate.</p>
         <div style="display: flex; gap: 8px;">
           <input type="number" id="cfg-budget" class="input-field" style="flex: 1;" placeholder="250000">
           <button class="btn-primary" style="margin-top: 0; padding: 12px 18px;" onclick="saveBudgetTarget()">Save</button>
@@ -1327,7 +1679,7 @@
       <!-- Data Export & Backups -->
       <div class="settings-card">
         <h4>💾 Physical Backups</h4>
-        <p>Download a physical copy of your entire ledger directly to your device.</p>
+        <p>Download a physical copy of your ledger directly to your device.</p>
         <div style="display: flex; gap: 8px; flex-wrap: wrap;">
           <button class="btn-primary" style="flex: 1; margin: 0; padding: 12px;" onclick="exportJSONBackup()">📥 JSON Backup</button>
           <button class="btn-primary" style="flex: 1; margin: 0; padding: 12px; background: var(--surface-hover); color: var(--text-main);" onclick="exportCSV()">📊 Export CSV</button>
@@ -1357,37 +1709,133 @@
       'Other': { icon: '⚙️', color: '#94a3b8' }
     };
 
-    // Load initial expenses from localStorage
-    let expenses = JSON.parse(localStorage.getItem('craft_expenses') || 'null');
-    if (!expenses) {
-      const oldRaw = localStorage.getItem('meal_extra_expenses');
-      if (oldRaw) {
-        try {
-          const oldList = JSON.parse(oldRaw);
-          expenses = oldList.map(e => ({
-            id: e.id || `exp_${Date.now()}_${Math.random().toString(36).slice(2, 6)}`,
-            amount: Number(e.amount) || 0,
-            category: cleanCategoryName(e.category),
-            description: e.name || 'Expense',
-            note: e.note || '',
-            date: e.date || new Date().toISOString()
-          }));
-        } catch (err) {
-          expenses = [];
-        }
-      } else {
-        expenses = [];
-      }
-      localStorage.setItem('craft_expenses', JSON.stringify(expenses));
+    // Profiles Configuration
+    const DEFAULT_PROFILES = [
+      { id: 'iddi', name: 'Iddi', avatar: '👨🏾‍💻' },
+      { id: 'sister', name: 'Sister', avatar: '🌸' }
+    ];
+
+    let profiles = JSON.parse(localStorage.getItem('craft_profiles') || 'null');
+    if (!profiles || !Array.isArray(profiles) || profiles.length === 0) {
+      profiles = DEFAULT_PROFILES;
+      localStorage.setItem('craft_profiles', JSON.stringify(profiles));
     }
 
-    let budgetTarget = Number(localStorage.getItem('craft_budget_target')) || 250000;
+    let activeProfileId = localStorage.getItem('craft_active_profile_id') || 'iddi';
+    if (!profiles.find(p => p.id === activeProfileId)) {
+      activeProfileId = profiles[0].id;
+      localStorage.setItem('craft_active_profile_id', activeProfileId);
+    }
+
+    // Helper functions for profile data
+    function getExpensesForProfile(pId) {
+      const specific = localStorage.getItem(`craft_expenses_${pId}`);
+      if (specific) {
+        try { return JSON.parse(specific); } catch(e) {}
+      }
+      if (pId === 'iddi') {
+        const legacy = localStorage.getItem('craft_expenses');
+        if (legacy) {
+          try {
+            const parsed = JSON.parse(legacy);
+            localStorage.setItem(`craft_expenses_iddi`, JSON.stringify(parsed));
+            return parsed;
+          } catch(e) {}
+        }
+      }
+      return [];
+    }
+
+    function saveExpensesForProfile(pId, list) {
+      localStorage.setItem(`craft_expenses_${pId}`, JSON.stringify(list));
+      if (pId === 'iddi') {
+        localStorage.setItem('craft_expenses', JSON.stringify(list)); // legacy sync
+      }
+    }
+
+    function getBudgetForProfile(pId) {
+      const val = localStorage.getItem(`craft_budget_target_${pId}`);
+      if (val) return Number(val) || 250000;
+      if (pId === 'iddi') {
+        const legacy = localStorage.getItem('craft_budget_target');
+        if (legacy) return Number(legacy) || 250000;
+      }
+      return 250000;
+    }
+
+    function saveBudgetForProfile(pId, val) {
+      localStorage.setItem(`craft_budget_target_${pId}`, val);
+      if (pId === 'iddi') {
+        localStorage.setItem('craft_budget_target', val);
+      }
+    }
+
+    // Load active profile data
+    let expenses = getExpensesForProfile(activeProfileId);
+    let budgetTarget = getBudgetForProfile(activeProfileId);
+
+    // Month Navigation State
+    function getCurrentMonthKey() {
+      const now = new Date();
+      const y = now.getFullYear();
+      const m = String(now.getMonth() + 1).padStart(2, '0');
+      return `${y}-${m}`; // e.g. "2026-11"
+    }
+
+    let selectedMonth = getCurrentMonthKey(); // default to current month
     let activeFilter = 'all';
     let currentEditingId = null;
     let activeFormCategory = 'Groceries';
 
     // Cloud configuration
     let cloudConfig = JSON.parse(localStorage.getItem('craft_cloud_config') || '{}');
+
+    // ==========================================
+    // UTILITY HELPERS
+    // ==========================================
+    function getExpenseMonthKey(dateVal) {
+      if (!dateVal) return getCurrentMonthKey();
+      const d = new Date(dateVal);
+      if (isNaN(d.getTime())) return getCurrentMonthKey();
+      const y = d.getFullYear();
+      const m = String(d.getMonth() + 1).padStart(2, '0');
+      return `${y}-${m}`;
+    }
+
+    function getMonthName(monthKey) {
+      const [y, m] = monthKey.split('-').map(Number);
+      const d = new Date(y, m - 1, 1);
+      return d.toLocaleDateString('en-US', { month: 'short', year: 'numeric' }); // e.g. "Nov 2026"
+    }
+
+    function getMonthFullTitle(monthKey) {
+      const [y, m] = monthKey.split('-').map(Number);
+      const d = new Date(y, m - 1, 1);
+      return d.toLocaleDateString('en-US', { month: 'long', year: 'numeric' }); // e.g. "November 2026"
+    }
+
+    function getDaysInMonth(monthKey) {
+      const [y, m] = monthKey.split('-').map(Number);
+      return new Date(y, m, 0).getDate(); // e.g. 30 for Nov, 31 for Oct
+    }
+
+    function getAvailableMonths() {
+      const set = new Set();
+      set.add(getCurrentMonthKey()); // current month (e.g. 2026-11)
+
+      // Always include previous month so October is always accessible
+      const now = new Date();
+      const prevDate = new Date(now.getFullYear(), now.getMonth() - 1, 1);
+      const prevKey = `${prevDate.getFullYear()}-${String(prevDate.getMonth() + 1).padStart(2, '0')}`;
+      set.add(prevKey);
+
+      // Add all months from recorded expenses
+      expenses.forEach(e => {
+        set.add(getExpenseMonthKey(e.date || e.created_at));
+      });
+
+      return Array.from(set).sort().reverse();
+    }
 
     function cleanCategoryName(raw) {
       if (!raw) return 'Other';
@@ -1419,18 +1867,62 @@
     }
 
     // ==========================================
+    // MONTH NAVIGATION
+    // ==========================================
+    function navigateMonth(direction) {
+      triggerHaptic(8);
+      const [y, m] = selectedMonth.split('-').map(Number);
+      const target = new Date(y, m - 1 + direction, 1);
+      const targetKey = `${target.getFullYear()}-${String(target.getMonth() + 1).padStart(2, '0')}`;
+      selectedMonth = targetKey;
+      renderApp();
+    }
+
+    function jumpToCurrentMonth() {
+      triggerHaptic(10);
+      selectedMonth = getCurrentMonthKey();
+      renderApp();
+    }
+
+    // ==========================================
     // RENDERING LOGIC
     // ==========================================
     function renderApp() {
+      updateProfileHeaders();
       renderHeroSummary();
       renderCategoryGrid();
       renderLedgerFeed();
       updateSyncStatus();
     }
 
+    function updateProfileHeaders() {
+      const curProfile = profiles.find(p => p.id === activeProfileId) || profiles[0];
+      document.getElementById('header-profile-tag').textContent = curProfile.name;
+    }
+
     function renderHeroSummary() {
-      const total = expenses.reduce((sum, e) => sum + (Number(e.amount) || 0), 0);
+      const currentMonthKey = getCurrentMonthKey();
+      const isCurrentMonth = (selectedMonth === currentMonthKey);
+      const monthTitle = getMonthFullTitle(selectedMonth);
+      const monthShort = getMonthName(selectedMonth);
+
+      // Filter expenses for this selected month
+      const monthExpenses = expenses.filter(e => getExpenseMonthKey(e.date || e.created_at) === selectedMonth);
+      const total = monthExpenses.reduce((sum, e) => sum + (Number(e.amount) || 0), 0);
+
+      // Hero Title and Month Pill
+      document.getElementById('hero-month-title').textContent = `${monthTitle} Total Outlay`;
+      document.getElementById('current-month-name').textContent = `${monthShort} ▾`;
       document.getElementById('hero-total-val').textContent = formatRWF(total);
+
+      // Past Month Banner Alert
+      const banner = document.getElementById('past-month-banner');
+      if (!isCurrentMonth) {
+        banner.style.display = 'flex';
+        document.getElementById('past-month-alert-text').textContent = `📅 Viewing ${monthTitle} (Closed Month)`;
+      } else {
+        banner.style.display = 'none';
+      }
 
       // Budget Progress
       const pct = budgetTarget > 0 ? Math.min(100, Math.round((total / budgetTarget) * 100)) : 0;
@@ -1440,31 +1932,45 @@
 
       document.getElementById('budget-ratio-text').textContent = `${formatRWF(total)} / ${formatRWF(budgetTarget)} RWF (${pct}%)`;
 
-      // Burn rate calculation (October has 31 days)
-      const now = new Date();
-      const currentDay = Math.max(1, now.getDate());
-      const totalDays = 31;
-      const daysLeft = Math.max(1, totalDays - currentDay);
+      // Burn rate calculation
+      const totalDays = getDaysInMonth(selectedMonth);
       const remainingBudget = Math.max(0, budgetTarget - total);
-      const dailyAllowance = Math.round(remainingBudget / daysLeft);
 
-      document.getElementById('burn-rate-text').textContent = `Allowance: ${formatRWF(dailyAllowance)} RWF/d`;
-      document.getElementById('days-remaining-text').textContent = `${daysLeft} days left in Oct`;
+      if (isCurrentMonth) {
+        const now = new Date();
+        const currentDay = Math.max(1, now.getDate());
+        const daysLeft = Math.max(1, totalDays - currentDay);
+        const dailyAllowance = Math.round(remainingBudget / daysLeft);
+
+        document.getElementById('burn-rate-text').textContent = `Allowance: ${formatRWF(dailyAllowance)} RWF/d`;
+        document.getElementById('days-remaining-text').textContent = `${daysLeft} days left in ${monthShort.split(' ')[0]}`;
+      } else {
+        // Closed / Past Month
+        const diff = budgetTarget - total;
+        if (diff >= 0) {
+          document.getElementById('burn-rate-text').textContent = `Status: Under budget by ${formatRWF(diff)} RWF`;
+        } else {
+          document.getElementById('burn-rate-text').textContent = `Status: Over budget by ${formatRWF(Math.abs(diff))} RWF`;
+        }
+        document.getElementById('days-remaining-text').textContent = `${totalDays}/${totalDays} days (Closed)`;
+      }
     }
 
     function renderCategoryGrid() {
       const grid = document.getElementById('category-summary-grid');
       const catTotals = {};
-      let totalAll = 0;
+      let totalMonth = 0;
 
       for (const cat in DEFAULT_CATEGORIES) {
         catTotals[cat] = 0;
       }
 
-      expenses.forEach(e => {
+      const monthExpenses = expenses.filter(e => getExpenseMonthKey(e.date || e.created_at) === selectedMonth);
+
+      monthExpenses.forEach(e => {
         const c = DEFAULT_CATEGORIES[e.category] ? e.category : 'Other';
         catTotals[c] += (Number(e.amount) || 0);
-        totalAll += (Number(e.amount) || 0);
+        totalMonth += (Number(e.amount) || 0);
       });
 
       const sorted = Object.entries(catTotals).sort((a, b) => b[1] - a[1]);
@@ -1476,7 +1982,7 @@
 
       grid.innerHTML = displayCats.map(([cat, amt]) => {
         const info = DEFAULT_CATEGORIES[cat] || { icon: '🏷️' };
-        const share = totalAll > 0 ? Math.round((amt / totalAll) * 100) : 0;
+        const share = totalMonth > 0 ? Math.round((amt / totalMonth) * 100) : 0;
         const isSelected = activeFilter === cat;
 
         return `
@@ -1499,16 +2005,22 @@
 
     function renderLedgerFeed() {
       const feed = document.getElementById('tx-ledger-container');
+      
+      // Filter by both selected month and active category
+      const monthExpenses = expenses.filter(e => getExpenseMonthKey(e.date || e.created_at) === selectedMonth);
       const filtered = activeFilter === 'all' 
-        ? expenses 
-        : expenses.filter(e => e.category === activeFilter);
+        ? monthExpenses 
+        : monthExpenses.filter(e => e.category === activeFilter);
+
+      const monthTitle = getMonthFullTitle(selectedMonth);
 
       if (filtered.length === 0) {
+        const isCurrent = (selectedMonth === getCurrentMonthKey());
         feed.innerHTML = `
           <div class="tx-empty-state">
-            <div class="tx-empty-icon">🧾</div>
-            <h3>Ready for October Spend</h3>
-            <p>No expenses recorded ${activeFilter !== 'all' ? `for ${activeFilter}` : 'yet'}. Tap below to log your first coffee, moto ride, or grocery run.</p>
+            <div class="tx-empty-icon">${isCurrent ? '🌱' : '📁'}</div>
+            <h3>${isCurrent ? `Ready for ${monthTitle}` : `No records in ${monthTitle}`}</h3>
+            <p>${isCurrent ? 'No expenses recorded yet this month. Tap below to log your first coffee, moto ride, or grocery run.' : `No transactions logged for ${activeFilter !== 'all' ? activeFilter : 'this month'}.`}</p>
             <button class="empty-action-btn" onclick="openExpenseSheet()">
               <span>＋ Log Expense</span>
             </button>
@@ -1615,6 +2127,11 @@
       document.getElementById('inp-amount').value = '';
       document.getElementById('inp-desc').value = '';
       document.getElementById('inp-note').value = '';
+
+      // Default date to today
+      const todayISO = new Date().toISOString().slice(0, 10);
+      document.getElementById('inp-date').value = todayISO;
+
       selectFormCategory('Groceries');
 
       document.getElementById('expense-modal').classList.add('open');
@@ -1682,8 +2199,12 @@
       document.getElementById('inp-amount').value = item.amount;
       document.getElementById('inp-desc').value = item.description || '';
       document.getElementById('inp-note').value = item.note || '';
-      selectFormCategory(item.category || 'Other');
 
+      if (item.date) {
+        document.getElementById('inp-date').value = new Date(item.date).toISOString().slice(0, 10);
+      }
+
+      selectFormCategory(item.category || 'Other');
       document.getElementById('expense-modal').classList.add('open');
     }
 
@@ -1692,6 +2213,7 @@
       const amtInput = document.getElementById('inp-amount');
       const descInput = document.getElementById('inp-desc');
       const noteInput = document.getElementById('inp-note');
+      const dateInput = document.getElementById('inp-date');
 
       const amount = Math.round(Number(amtInput.value) || 0);
       if (amount <= 0) {
@@ -1702,6 +2224,7 @@
 
       const desc = descInput.value.trim() || activeFormCategory;
       const note = noteInput.value.trim();
+      const chosenDate = dateInput.value ? new Date(dateInput.value).toISOString() : new Date().toISOString();
 
       if (currentEditingId) {
         // Update existing transaction
@@ -1712,7 +2235,8 @@
             amount,
             category: activeFormCategory,
             description: desc,
-            note
+            note,
+            date: chosenDate
           };
           showToast(`Updated: ${desc} (${formatRWF(amount)} RWF)`);
           syncExpenseToCloud(expenses[idx], 'UPDATE');
@@ -1725,15 +2249,21 @@
           category: activeFormCategory,
           description: desc,
           note,
-          date: new Date().toISOString(),
+          date: chosenDate,
           created_at: new Date().toISOString()
         };
         expenses.unshift(newRecord);
         showToast(`Logged: ${desc} (${formatRWF(amount)} RWF)`);
         syncExpenseToCloud(newRecord, 'INSERT');
+
+        // If transaction is in a different month, navigate to it so user sees it
+        const entryMonth = getExpenseMonthKey(chosenDate);
+        if (entryMonth !== selectedMonth) {
+          selectedMonth = entryMonth;
+        }
       }
 
-      localStorage.setItem('craft_expenses', JSON.stringify(expenses));
+      saveExpensesForProfile(activeProfileId, expenses);
       closeExpenseSheet();
       renderApp();
     }
@@ -1744,7 +2274,7 @@
         triggerHaptic(20);
         const idToDelete = currentEditingId;
         expenses = expenses.filter(e => e.id !== idToDelete);
-        localStorage.setItem('craft_expenses', JSON.stringify(expenses));
+        saveExpensesForProfile(activeProfileId, expenses);
         syncExpenseToCloud({ id: idToDelete }, 'DELETE');
         closeExpenseSheet();
         renderApp();
@@ -1759,10 +2289,244 @@
     }
 
     // ==========================================
+    // MONTH-ON-MONTH REPORTS ENGINE
+    // ==========================================
+    function openReportsModal() {
+      triggerHaptic(10);
+      renderReportsList();
+      document.getElementById('reports-modal').classList.add('open');
+    }
+
+    function closeReportsModal() {
+      document.getElementById('reports-modal').classList.remove('open');
+    }
+
+    function renderReportsList() {
+      const container = document.getElementById('reports-list-container');
+      const months = getAvailableMonths();
+      const currentMonthKey = getCurrentMonthKey();
+
+      if (months.length === 0) {
+        container.innerHTML = `<p style="text-align: center; color: var(--text-muted); padding: 20px;">No monthly data recorded yet.</p>`;
+        return;
+      }
+
+      container.innerHTML = months.map(mKey => {
+        const isCurrent = (mKey === currentMonthKey);
+        const mTitle = getMonthFullTitle(mKey);
+        const mShort = getMonthName(mKey);
+        const daysInMonth = getDaysInMonth(mKey);
+
+        const mExpenses = expenses.filter(e => getExpenseMonthKey(e.date || e.created_at) === mKey);
+        const total = mExpenses.reduce((sum, e) => sum + (Number(e.amount) || 0), 0);
+        const pct = budgetTarget > 0 ? Math.min(100, Math.round((total / budgetTarget) * 100)) : 0;
+        const diff = budgetTarget - total;
+
+        // Top categories
+        const catMap = {};
+        mExpenses.forEach(e => {
+          catMap[e.category] = (catMap[e.category] || 0) + (Number(e.amount) || 0);
+        });
+        const topCats = Object.entries(catMap).sort((a, b) => b[1] - a[1]).slice(0, 3);
+
+        const avgDaily = isCurrent 
+          ? Math.round(total / Math.max(1, new Date().getDate()))
+          : Math.round(total / daysInMonth);
+
+        return `
+          <div class="report-card">
+            <div class="report-header">
+              <span class="report-month-title">${mTitle}</span>
+              <span class="report-status-badge ${isCurrent ? 'active' : 'closed'}">
+                ${isCurrent ? '🟢 Active In Progress' : '✅ Closed Month'}
+              </span>
+            </div>
+
+            <div class="budget-section" style="padding-top: 0; border: none;">
+              <div class="budget-meta">
+                <span>Total Outlay</span>
+                <span style="font-family: var(--font-mono); font-weight: 800; color: var(--text-main); font-size: 14px;">
+                  ${formatRWF(total)} / ${formatRWF(budgetTarget)} RWF (${pct}%)
+                </span>
+              </div>
+              <div class="budget-track">
+                <div class="budget-fill ${pct > 90 ? 'danger' : pct > 75 ? 'warning' : ''}" style="width: ${pct}%;"></div>
+              </div>
+            </div>
+
+            <div class="report-kpi-grid">
+              <div class="report-kpi-box">
+                <span class="report-kpi-val">${mExpenses.length}</span>
+                <span class="report-kpi-lbl">Entries</span>
+              </div>
+              <div class="report-kpi-box">
+                <span class="report-kpi-val">${formatRWF(avgDaily)}</span>
+                <span class="report-kpi-lbl">Daily Avg</span>
+              </div>
+              <div class="report-kpi-box">
+                <span class="report-kpi-val" style="color: ${diff >= 0 ? 'var(--accent-green)' : 'var(--accent-red)'};">
+                  ${diff >= 0 ? '+' : ''}${formatRWF(diff)}
+                </span>
+                <span class="report-kpi-lbl">${diff >= 0 ? 'Savings' : 'Overrun'}</span>
+              </div>
+            </div>
+
+            ${topCats.length > 0 ? `
+              <div class="report-top-cats">
+                <span class="picker-label" style="font-size: 10px;">Top Spend Categories</span>
+                ${topCats.map(([cat, amt]) => {
+                  const info = DEFAULT_CATEGORIES[cat] || { icon: '🏷️' };
+                  const share = total > 0 ? Math.round((amt / total) * 100) : 0;
+                  return `
+                    <div class="report-cat-row">
+                      <div class="report-cat-meta">
+                        <span>${info.icon}</span>
+                        <span>${cat}</span>
+                      </div>
+                      <span class="report-cat-amt">${formatRWF(amt)} RWF (${share}%)</span>
+                    </div>
+                  `;
+                }).join('')}
+              </div>
+            ` : ''}
+
+            <div class="report-actions">
+              <button class="btn-report-action" onclick="jumpToMonthFromReport('${mKey}')">
+                <span>🔍 View Month</span>
+              </button>
+              <button class="btn-report-action" onclick="copyMonthSummary('${mKey}', ${total}, ${pct}, ${diff}, ${mExpenses.length})">
+                <span>📋 Copy Summary</span>
+              </button>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function jumpToMonthFromReport(mKey) {
+      triggerHaptic(10);
+      selectedMonth = mKey;
+      closeReportsModal();
+      renderApp();
+    }
+
+    function copyMonthSummary(mKey, total, pct, diff, count) {
+      triggerHaptic(12);
+      const mTitle = getMonthFullTitle(mKey);
+      const curProfile = profiles.find(p => p.id === activeProfileId) || profiles[0];
+      
+      const summaryText = `📊 Craft Spend — ${mTitle} Summary
+👤 Profile: ${curProfile.name}
+💰 Total Outlay: ${formatRWF(total)} RWF
+🎯 Budget Target: ${formatRWF(budgetTarget)} RWF (${pct}% used)
+⚖️ Balance: ${diff >= 0 ? `Under budget by ${formatRWF(diff)} RWF 🎉` : `Over budget by ${formatRWF(Math.abs(diff))} RWF`}
+📝 Total Transactions: ${count}
+Tracked with Craft Spend (Kigali Ledger)`;
+
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(summaryText);
+        showToast('Copied summary to clipboard! 📋');
+      } else {
+        alert(summaryText);
+      }
+    }
+
+    // ==========================================
+    // MULTI-PROFILE SYSTEM (IDDI & SISTER)
+    // ==========================================
+    function openProfileModal() {
+      triggerHaptic(10);
+      renderProfilesList();
+      document.getElementById('profile-modal').classList.add('open');
+    }
+
+    function closeProfileModal() {
+      document.getElementById('profile-modal').classList.remove('open');
+    }
+
+    function renderProfilesList() {
+      const container = document.getElementById('profiles-list-container');
+      container.innerHTML = profiles.map(p => {
+        const isActive = (p.id === activeProfileId);
+        const pExpenses = getExpensesForProfile(p.id);
+        const pTotal = pExpenses.reduce((s, e) => s + (Number(e.amount) || 0), 0);
+
+        return `
+          <div class="profile-card ${isActive ? 'active' : ''}" onclick="switchProfile('${p.id}')">
+            <div class="profile-info">
+              <div class="profile-avatar">${p.avatar || '👤'}</div>
+              <div>
+                <div class="profile-name">${escapeHtml(p.name)}</div>
+                <div class="profile-sub">${pExpenses.length} transactions recorded (${formatRWF(pTotal)} RWF total)</div>
+              </div>
+            </div>
+            ${isActive ? `<span class="profile-badge-active">Active</span>` : `<span style="font-size: 12px; color: var(--text-muted); font-weight: 700;">Select ›</span>`}
+          </div>
+        `;
+      }).join('');
+    }
+
+    function switchProfile(pId) {
+      if (activeProfileId === pId) {
+        closeProfileModal();
+        return;
+      }
+      triggerHaptic(15);
+      activeProfileId = pId;
+      localStorage.setItem('craft_active_profile_id', activeProfileId);
+
+      // Reload state for newly selected profile
+      expenses = getExpensesForProfile(activeProfileId);
+      budgetTarget = getBudgetForProfile(activeProfileId);
+
+      closeProfileModal();
+      renderApp();
+      const p = profiles.find(x => x.id === pId);
+      showToast(`Switched to ${p ? p.name : 'Profile'}! 🎉`);
+    }
+
+    function promptAddNewProfile() {
+      triggerHaptic(10);
+      const name = prompt("Enter new profile name (e.g. Marie, Household, Travel):");
+      if (!name || !name.trim()) return;
+
+      const newId = `profile_${Date.now()}`;
+      const newProfile = {
+        id: newId,
+        name: name.trim(),
+        avatar: '👤'
+      };
+
+      profiles.push(newProfile);
+      localStorage.setItem('craft_profiles', JSON.stringify(profiles));
+      switchProfile(newId);
+    }
+
+    function copySisterShareLink() {
+      triggerHaptic(10);
+      const link = window.location.origin + window.location.pathname;
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(link);
+        showToast('Copied app link! Send it to her 📲');
+      } else {
+        alert(`Share this link with your sister:\n${link}`);
+      }
+    }
+
+    function shareSisterWhatsApp() {
+      triggerHaptic(10);
+      const link = window.location.origin + window.location.pathname;
+      const text = encodeURIComponent(`Hi! Here is the Craft Spend app we talked about for tracking daily expenses in Kigali (super simple, offline-first): ${link}`);
+      window.open(`https://wa.me/?text=${text}`, '_blank');
+    }
+
+    // ==========================================
     // SETTINGS, BACKUPS & SUPABASE CLOUD SYNC
     // ==========================================
     function openSettingsModal() {
       triggerHaptic(10);
+      const curProfile = profiles.find(p => p.id === activeProfileId) || profiles[0];
+      document.getElementById('cfg-budget-title').textContent = `🎯 ${curProfile.name}'s Monthly Budget Target`;
       document.getElementById('cfg-budget').value = budgetTarget;
       document.getElementById('cfg-supabase-url').value = cloudConfig.url || '';
       document.getElementById('cfg-supabase-key').value = cloudConfig.key || '';
@@ -1777,7 +2541,7 @@
       triggerHaptic(12);
       const val = Number(document.getElementById('cfg-budget').value) || 250000;
       budgetTarget = val;
-      localStorage.setItem('craft_budget_target', budgetTarget);
+      saveBudgetForProfile(activeProfileId, budgetTarget);
       showToast('Budget saved: ' + formatRWF(budgetTarget) + ' RWF');
       renderHeroSummary();
     }
@@ -1854,7 +2618,7 @@
           await fetch(`${cloudConfig.url}/rest/v1/expenses`, {
             method: 'POST',
             headers,
-            body: JSON.stringify(item)
+            body: JSON.stringify({ ...item, profile: activeProfileId })
           });
         } else if (action === 'DELETE') {
           await fetch(`${cloudConfig.url}/rest/v1/expenses?id=eq.${item.id}`, {
@@ -1887,7 +2651,7 @@
             expenses.forEach(e => map.set(e.id, e));
             remote.forEach(e => map.set(e.id, e));
             expenses = Array.from(map.values());
-            localStorage.setItem('craft_expenses', JSON.stringify(expenses));
+            saveExpensesForProfile(activeProfileId, expenses);
             renderApp();
             showToast('Synced from Cloud');
           }
@@ -1902,10 +2666,12 @@
     // ==========================================
     function exportJSONBackup() {
       triggerHaptic(10);
+      const curProfile = profiles.find(p => p.id === activeProfileId) || profiles[0];
       const data = {
         app: 'Craft Spend',
-        version: '2.0',
+        version: '3.0',
         exported_at: new Date().toISOString(),
+        profile: curProfile.name,
         budgetTarget,
         expenses
       };
@@ -1914,13 +2680,14 @@
       const a = document.createElement('a');
       const dStr = new Date().toISOString().split('T')[0];
       a.href = URL.createObjectURL(blob);
-      a.download = `craft-spend-backup-${dStr}.json`;
+      a.download = `craft-spend-${curProfile.name.toLowerCase()}-${dStr}.json`;
       a.click();
       showToast('Downloaded JSON Backup');
     }
 
     function exportCSV() {
       triggerHaptic(10);
+      const curProfile = profiles.find(p => p.id === activeProfileId) || profiles[0];
       if (expenses.length === 0) {
         showToast('No expenses to export');
         return;
@@ -1943,7 +2710,7 @@
       const a = document.createElement('a');
       const dStr = new Date().toISOString().split('T')[0];
       a.href = URL.createObjectURL(blob);
-      a.download = `craft-spend-${dStr}.csv`;
+      a.download = `craft-spend-${curProfile.name.toLowerCase()}-${dStr}.csv`;
       a.click();
       showToast('Exported CSV');
     }
@@ -1965,8 +2732,8 @@
             return;
           }
           if (parsed.budgetTarget) budgetTarget = parsed.budgetTarget;
-          localStorage.setItem('craft_expenses', JSON.stringify(expenses));
-          localStorage.setItem('craft_budget_target', budgetTarget);
+          saveExpensesForProfile(activeProfileId, expenses);
+          saveBudgetForProfile(activeProfileId, budgetTarget);
           closeSettingsModal();
           renderApp();
           showToast('Restored successfully! 🎉');
